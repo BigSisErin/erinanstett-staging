@@ -263,29 +263,36 @@ function Table(surface){
 }
 
 function Manual(m){
-  var book=$('.book',m),ps=$$('.mpage',m),i=0;
+  var stage=$('.gstage',m),ps=$$('.gp',m),dots=$('.gdots',m),prev=$('.gprev',m),next=$('.gnext',m),stat=$('[data-gstatus]',m);
+  var mq=matchMedia('(max-width:800px)'),views=[],i=0,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   m.classList.add('js');
-  ps.forEach(function(p,k){p.style.setProperty('--i',k)});
-  function measure(){
-    book.style.setProperty('--bh','10px');
-    var h=0;ps.forEach(function(p){h=Math.max(h,p.scrollHeight+4)});
-    book.style.setProperty('--bh',Math.max(h,380)+'px');
+  function build(){
+    views=[];
+    if(mq.matches){ps.forEach(function(p){views.push([p])})}
+    else{views.push([ps[0]]);for(var k=1;k<ps.length-1;k+=2)views.push([ps[k],ps[k+1]]);views.push([ps[ps.length-1]])}
+    dots.innerHTML='';
+    views.forEach(function(v,x){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Go to '+(x===0?'front cover':x===views.length-1?'back cover':'spread '+x));b.addEventListener('click',function(){show(x,true)});dots.appendChild(b)});
   }
   function show(k,anim){
-    var nk=Math.max(0,Math.min(ps.length-1,k));
-    if(nk!==i&&anim){click()}
-    i=nk;
-    ps.forEach(function(p,x){p.classList.toggle('flipped',x<i);p.setAttribute('aria-hidden',x===i?'false':'true');p.inert=x!==i});
+    k=Math.max(0,Math.min(views.length-1,k));
+    var dir=k>=i?'r':'l',ch=k!==i;i=k;
+    ps.forEach(function(p){p.classList.remove('on','enter-r','enter-l');p.inert=true;p.setAttribute('aria-hidden','true')});
+    views[i].forEach(function(p,n){p.classList.add('on');p.inert=false;p.removeAttribute('aria-hidden');
+      if(anim&&ch&&!reduce){void p.offsetWidth;p.classList.add(dir==='r'?(p.dataset.side==='r'||views[i].length===1?'enter-r':'enter-l'):'enter-l')}});
+    $$('button',dots).forEach(function(b,x){if(x===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
+    prev.hidden=i===0;next.hidden=i===views.length-1;
+    stat.textContent='Page view '+(i+1)+' of '+views.length;
+    if(anim&&ch)click();
   }
-  m.addEventListener('click',function(e){
-    var t=e.target.closest('[data-m]');if(!t)return;
-    show(t.dataset.m==='next'?i+1:i-1,true);
-  });
+  m.addEventListener('click',function(e){var t=e.target.closest('[data-g]');if(!t)return;show(t.dataset.g==='next'?i+1:i-1,true)});
   m.setAttribute('tabindex','0');
   m.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();show(i+1,true)}else if(e.key==='ArrowLeft'){e.preventDefault();show(i-1,true)}});
-  measure();show(0,false);
-  var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(measure,120)});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measure);
+  var sx=null;
+  stage.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+  stage.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>45)show(i+(dx<0?1:-1),true)});
+  function rebuild(){var cur=views[i]&&views[i][0];build();var k=0;views.forEach(function(v,x){if(v.indexOf(cur)>-1)k=x});show(k,false)}
+  (mq.addEventListener?mq.addEventListener('change',rebuild):mq.addListener(rebuild));
+  build();show(0,false);
 }
 
 /* ---------- old tube TV: CRT static, channel dial, volume dial ---------- */
@@ -349,7 +356,7 @@ function TV(tv){
   function f(){bar.classList.toggle('solid',sec.getBoundingClientRect().bottom<bar.offsetHeight+10)}
   addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f()})();
 document.addEventListener('DOMContentLoaded',function(){
-  $$('[data-manual]').forEach(Manual);
+  $$('[data-guide]').forEach(Manual);
   $$('.stage[data-reel]').forEach(Reel);
   $$('.tv').forEach(TV);
   $$('.surface[data-table]').forEach(Table);
