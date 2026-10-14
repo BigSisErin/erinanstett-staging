@@ -601,3 +601,22 @@ body.tablepage{background:var(--teal)}
 }
 @media (prefers-reduced-motion:reduce){.gp.enter-r,.gp.enter-l{animation:none}}
 @media (max-width:800px){.gnav{flex-wrap:wrap}.gdots{order:3;flex-basis:100%;gap:9px}.gdots button{width:10px;height:10px}}
+
+/* --- guide v2: fixed module, click the cover to open --- */
+.gstage{--pw:min(50cqw,calc((100vh - 230px)*1.2415));width:calc(var(--pw)*2);max-width:100%;margin-inline:auto;height:calc(var(--pw)*1529/1898);grid-template-rows:minmax(0,1fr);position:relative}
+.gstage{perspective:2600px}
+.gp{overflow:hidden}
+.gp{height:100%;aspect-ratio:auto;border:0;padding:0;margin:0;font:inherit;text-align:inherit}
+button.gp.front{cursor:pointer;background:none;transition:transform .25s}
+button.gp.front:hover{transform:translateX(-6px) rotate(-.4deg)}
+button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
+.gleaf{position:absolute;top:0;left:50%;width:50%;height:100%;z-index:40;transform-origin:left center;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.45,.05,.25,1)}
+.gleaf .ff,.gleaf .fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.gleaf .fb{transform:rotateY(180deg)}
+.gleaf .gp{display:block!important;position:absolute;inset:0;width:100%;height:100%;filter:none;animation:none!important;grid-column:auto}
+.gp.pend{visibility:hidden}
+@media (max-width:800px){
+  .gstage{--pw:100cqw;width:auto;height:auto;grid-template-rows:none}.gp{overflow:visible}
+  .gp{height:auto}
+  .gleaf{display:none}
+}

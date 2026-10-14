@@ -273,14 +273,50 @@ function Manual(m){
     dots.innerHTML='';
     views.forEach(function(v,x){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Go to '+(x===0?'front cover':x===views.length-1?'back cover':'spread '+x));b.addEventListener('click',function(){show(x,true)});dots.appendChild(b)});
   }
+  function leafAnim(kind,oldV,newV,done){
+    var L=document.createElement('div');L.className='gleaf';
+    function face(cls,pg){var f=document.createElement('div');f.className=cls;var c=pg.cloneNode(true);c.classList.add('on');c.classList.remove('pend');c.removeAttribute('aria-hidden');c.removeAttribute('data-g');c.removeAttribute('inert');f.appendChild(c);return f}
+    var fwd=(kind==='open'||kind==='backclose');
+    var front,back,pend=[],hide=[];
+    if(kind==='open'||kind==='close'){var cover=ps[0],lp=(kind==='open'?newV:oldV)[0];front=face('ff',cover);back=face('fb',lp);
+      if(kind==='open'){hide=[cover];pend=[newV[0]]}else{pend=[newV[0]]}}
+    else{var bc=ps[ps.length-1],spread=(kind==='backclose'?oldV:newV),rp=spread[1];front=face('ff',rp);back=face('fb',bc);
+      if(kind==='backclose'){hide=[rp];pend=[newV[0]]}else{hide=[bc];pend=[rp]}}
+    L.appendChild(front);L.appendChild(back);
+    var startRot=fwd?0:-180,endRot=fwd?-180:0;
+    L.style.transform='rotateY('+startRot+'deg)';
+    stage.appendChild(L);
+    ps.forEach(function(p){p.classList.remove('on','enter-r','enter-l');p.inert=true});
+    var show2=oldV.concat(newV);
+    show2.forEach(function(p){p.classList.add('on');p.inert=false});
+    hide.forEach(function(p){p.classList.add('pend')});pend.forEach(function(p){p.classList.add('pend')});
+    if(kind==='close'||kind==='backclose'){}
+    void L.offsetWidth;
+    var fin=false;function end(){if(fin)return;fin=true;L.remove();ps.forEach(function(p){p.classList.remove('pend','on');p.inert=true});newV.forEach(function(p){p.classList.add('on');p.inert=false});done()}
+    requestAnimationFrame(function(){L.style.transform='rotateY('+endRot+'deg)'});
+    L.addEventListener('transitionend',function(e){if(e.target===L&&e.propertyName==='transform')end()});setTimeout(end,1100);
+  }
+  var busy=false;
   function show(k,anim){
     k=Math.max(0,Math.min(views.length-1,k));
-    var dir=k>=i?'r':'l',ch=k!==i;i=k;
+    if(busy)return;
+    var dir=k>=i?'r':'l',ch=k!==i;
+    if(anim&&ch&&!reduce&&!mq.matches&&Math.abs(k-i)===1){
+      var n=views.length,kind=null;
+      if(i===0&&k===1)kind='open';else if(i===1&&k===0)kind='close';
+      else if(i===n-2&&k===n-1)kind='backclose';else if(i===n-1&&k===n-2)kind='backopen';
+      if(kind){var oldV=views[i];busy=true;i=k;
+        $$('button',dots).forEach(function(b,x){if(x===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
+        prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open the guide \u203a':'Turn the page \u203a';
+        stat.textContent='Page view '+(i+1)+' of '+views.length;click();
+        leafAnim(kind,oldV,views[k],function(){busy=false});return}
+    }
+    i=k;
     ps.forEach(function(p){p.classList.remove('on','enter-r','enter-l');p.inert=true;p.setAttribute('aria-hidden','true')});
     views[i].forEach(function(p,n){p.classList.add('on');p.inert=false;p.removeAttribute('aria-hidden');
       if(anim&&ch&&!reduce){void p.offsetWidth;p.classList.add(dir==='r'?(p.dataset.side==='r'||views[i].length===1?'enter-r':'enter-l'):'enter-l')}});
     $$('button',dots).forEach(function(b,x){if(x===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
-    prev.hidden=i===0;next.hidden=i===views.length-1;
+    prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open the guide \u203a':'Turn the page \u203a';
     stat.textContent='Page view '+(i+1)+' of '+views.length;
     if(anim&&ch)click();
   }
