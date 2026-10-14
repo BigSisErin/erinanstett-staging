@@ -620,3 +620,11 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
   .gp{height:auto}
   .gleaf{display:none}
 }
+/* tab: ivory paper, cut out of the tiled surface, wood nav sitting on top */
+.tablepage .table .tophead .thead{background:#f0e3c4 url(../img/ui/paper.jpg) center/cover;color:#2e3a40;box-shadow:inset 0 16px 14px -12px rgba(40,20,5,.45),inset 0 -2px 0 rgba(120,90,40,.25);filter:drop-shadow(0 0 1px rgba(40,22,8,.7)) drop-shadow(0 3px 3px rgba(40,22,8,.25))}
+.tablepage .tophead .thead::before,.tablepage .tophead .thead::after{background:#f0e3c4 url(../img/ui/paper.jpg) center/cover}
+.tablepage .tophead .thead h1{color:#2e3a40}
+.tablepage .tophead .thead .kick2{color:#c8532f}
+.tablepage .tophead .thead .tags2{color:#2f6a64}
+.tablepage .tophead .thead p,.tablepage .tophead .thead p:last-child{color:#2e3a40}
+.tablepage .tophead .thead h1{line-height:1;margin-bottom:.12em}
