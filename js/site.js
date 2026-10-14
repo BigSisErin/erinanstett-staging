@@ -276,10 +276,12 @@ function Manual(m){
   function leafAnim(kind,oldV,newV,done){
     var L=document.createElement('div');L.className='gleaf';
     function face(cls,pg){var f=document.createElement('div');f.className=cls;var c=pg.cloneNode(true);c.classList.add('on');c.classList.remove('pend');c.removeAttribute('aria-hidden');c.removeAttribute('data-g');c.removeAttribute('inert');f.appendChild(c);return f}
-    var fwd=(kind==='open'||kind==='backclose');
+    var fwd=(kind==='open'||kind==='backclose'||kind==='turn');
     var front,back,pend=[],hide=[];
     if(kind==='open'||kind==='close'){var cover=ps[0],lp=(kind==='open'?newV:oldV)[0];front=face('ff',cover);back=face('fb',lp);
       if(kind==='open'){hide=[cover];pend=[newV[0]]}else{pend=[newV[0]]}}
+    else if(kind==='turn'){front=face('ff',oldV[1]);back=face('fb',newV[0]);hide=[oldV[1]];pend=[newV[0]]}
+    else if(kind==='turnback'){front=face('ff',newV[1]);back=face('fb',oldV[0]);hide=[oldV[0]];pend=[newV[1]]}
     else{var bc=ps[ps.length-1],spread=(kind==='backclose'?oldV:newV),rp=spread[1];front=face('ff',rp);back=face('fb',bc);
       if(kind==='backclose'){hide=[rp];pend=[newV[0]]}else{hide=[bc];pend=[rp]}}
     L.appendChild(front);L.appendChild(back);
@@ -304,7 +306,7 @@ function Manual(m){
     if(anim&&ch&&!reduce&&!mq.matches&&Math.abs(k-i)===1){
       var n=views.length,kind=null;
       if(i===0&&k===1)kind='open';else if(i===1&&k===0)kind='close';
-      else if(i===n-2&&k===n-1)kind='backclose';else if(i===n-1&&k===n-2)kind='backopen';
+      else if(i===n-2&&k===n-1)kind='backclose';else if(i>=1&&k>=1&&i<=n-2&&k<=n-2)kind=(k>i?'turn':'turnback');else if(i===n-1&&k===n-2)kind='backopen';
       if(kind){var oldV=views[i];busy=true;i=k;
         $$('button',dots).forEach(function(b,x){if(x===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
         prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open the guide \u203a':'Turn the page \u203a';
