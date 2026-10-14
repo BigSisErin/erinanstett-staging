@@ -9,9 +9,10 @@ var ctx=null,muted=false;
 try{muted=localStorage.getItem('ea-sound')==='off'}catch(e){}
 function unlock(){
   if(!ctx){try{var AC=window.AudioContext||window.webkitAudioContext;if(AC)ctx=new AC()}catch(e){}}
-  if(ctx&&ctx.state==='suspended')ctx.resume();
+  if(ctx&&ctx.state!=='running'&&ctx.resume){try{var r=ctx.resume();if(r&&r.catch)r.catch(function(){})}catch(e){}}
 }
-['pointerdown','keydown','touchstart'].forEach(function(ev){addEventListener(ev,unlock,{passive:true})});
+/* touch browsers only grant audio on touchend/pointerup/click, not touchstart */
+['pointerdown','pointerup','touchend','click','keydown'].forEach(function(ev){addEventListener(ev,unlock,{passive:true,capture:true})});
 function clack(t,f,gain){
   var n=Math.floor(ctx.sampleRate*0.045),buf=ctx.createBuffer(1,n,ctx.sampleRate),d=buf.getChannelData(0);
   for(var i=0;i<n;i++){d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3)}
@@ -23,9 +24,13 @@ function clack(t,f,gain){
   og.gain.setValueAtTime(gain*0.55,t);og.gain.exponentialRampToValueAtTime(0.001,t+0.05);
   o.connect(og);og.connect(ctx.destination);o.start(t);o.stop(t+0.06);
 }
+function play(){var t=ctx.currentTime;clack(t,2300,0.5);clack(t+0.075,1500,0.38)}
 function click(){
-  if(muted||!ctx||ctx.state!=='running')return;
-  var t=ctx.currentTime;clack(t,2300,0.5);clack(t+0.075,1500,0.38);
+  if(muted||!ctx)return;
+  if(ctx.state==='running'){play();return}
+  /* first gesture: context is still waking up, so play once it is running (only if that is immediate) */
+  var t0=Date.now();
+  try{var r=ctx.resume();if(r&&r.then)r.then(function(){if(!muted&&ctx.state==='running'&&Date.now()-t0<400)play()}).catch(function(){})}catch(e){}
 }
 function syncSound(){
   $$('.snd,.vsound,.dial.vol').forEach(function(b){b.setAttribute('aria-pressed',muted?'false':'true');b.setAttribute('aria-label',muted?'Sound off. Turn sound on':'Sound on. Turn sound off')});
