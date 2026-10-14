@@ -309,7 +309,7 @@ function Manual(m){
       else if(i===n-2&&k===n-1)kind='backclose';else if(i>=1&&k>=1&&i<=n-2&&k<=n-2)kind=(k>i?'turn':'turnback');else if(i===n-1&&k===n-2)kind='backopen';
       if(kind){var oldV=views[i];busy=true;i=k;
         $$('button',dots).forEach(function(b,x){if(x===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
-        prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open the guide \u203a':'Turn the page \u203a';
+        prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open':'Turn the page \u203a';
         stat.textContent='Page view '+(i+1)+' of '+views.length;click();
         leafAnim(kind,oldV,views[k],function(){busy=false});return}
     }
@@ -318,7 +318,7 @@ function Manual(m){
     views[i].forEach(function(p,n){p.classList.add('on');p.inert=false;p.removeAttribute('aria-hidden');
       if(anim&&ch&&!reduce){void p.offsetWidth;p.classList.add(dir==='r'?(p.dataset.side==='r'||views[i].length===1?'enter-r':'enter-l'):'enter-l')}});
     $$('button',dots).forEach(function(b,x){if(x===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
-    prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open the guide \u203a':'Turn the page \u203a';
+    prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open':'Turn the page \u203a';
     stat.textContent='Page view '+(i+1)+' of '+views.length;
     if(anim&&ch)click();
   }
