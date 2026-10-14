@@ -637,3 +637,6 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 @media (max-width:700px){.tablepage .tophead .thead .tags2{white-space:normal;letter-spacing:.12em;text-wrap:balance;font-size:.72rem}.tablepage .tophead .thead>div{padding-inline:15%}}
 .gp.bleed{background:none}
 .gp.bleed::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(70,45,15,.3),rgba(70,45,15,0) 9%)}
+/* guide: tighter shadows so the book sits on the surface */
+.gp,.gp.front,.gp.back{filter:drop-shadow(0 1px 1.5px rgba(60,40,15,.45)) drop-shadow(0 4px 5px rgba(60,40,15,.2))}
+.gleaf .gp{filter:none}
