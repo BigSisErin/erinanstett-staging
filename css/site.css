@@ -628,3 +628,10 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 .tablepage .tophead .thead .tags2{color:#2f6a64}
 .tablepage .tophead .thead p,.tablepage .tophead .thead p:last-child{color:#2e3a40}
 .tablepage .tophead .thead h1{line-height:1;margin-bottom:.12em}
+
+/* tab: sleeve-notch silhouette (ogee shoulders into a broad shallow arc) */
+.tablepage .table .tophead .thead{width:min(920px,calc(100% - 2*var(--gutter)));background:none!important;box-shadow:none!important;border-radius:0!important;padding:0!important;filter:drop-shadow(0 0 1px rgba(40,22,8,.7)) drop-shadow(0 4px 4px rgba(40,22,8,.25))}
+.tablepage .tophead .thead::before,.tablepage .tophead .thead::after{display:none!important}
+.tablepage .tophead .thead>div{background:#f0e3c4 url(../img/ui/paper.jpg) center/cover;padding:clamp(18px,2.4vw,28px) 16% clamp(50px,6.5vw,76px);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 220' preserveAspectRatio='none'%3E%3Cpath d='M0 0 C60 0 100 4 125 24 C140 38 135 90 170 150 C205 205 330 220 500 220 C670 220 795 205 830 150 C865 90 860 38 875 24 C900 4 940 0 1000 0 Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 220' preserveAspectRatio='none'%3E%3Cpath d='M0 0 C60 0 100 4 125 24 C140 38 135 90 170 150 C205 205 330 220 500 220 C670 220 795 205 830 150 C865 90 860 38 875 24 C900 4 940 0 1000 0 Z'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+@media (max-width:700px){.tablepage .tophead .thead>div{padding:14px 12% 58px}}
+@media (max-width:700px){.tablepage .tophead .thead .tags2{white-space:normal;letter-spacing:.12em;text-wrap:balance;font-size:.72rem}.tablepage .tophead .thead>div{padding-inline:15%}}
