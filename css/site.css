@@ -671,3 +671,9 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 
 .reel-page .frame.still.hascred .main{bottom:calc(var(--fi-b,70px) + 26px)}
 .reel-page .frame.still.hascred .main img{max-height:calc(100svh - var(--fi-t) - var(--fi-b) - 26px)}
+
+.frame.still.hascopy .scopy{position:absolute;z-index:2;color:#fff;max-width:34ch}
+.frame.still.hascopy .scopy h2{font-family:var(--ff-display);font-weight:700;font-stretch:75%;text-transform:uppercase;letter-spacing:.01em;line-height:.95;font-size:clamp(2rem,3.6vw,3.4rem);margin:0 0 .5em}
+.frame.still.hascopy .scopy p{font-size:clamp(.95rem,1.15vw,1.1rem);line-height:1.5;margin:0;color:rgba(255,255,255,.88)}
+@media(min-width:901px){.reel-page .frame.still.hascopy .main{right:calc(var(--fi-x,84px) + 36vw)}.frame.still.hascopy .scopy{right:var(--fi-x,84px);top:50%;transform:translateY(-50%);width:32vw}}
+@media(max-width:900px){.reel-page .frame.still.hascopy .main{bottom:calc(var(--fi-b,96px) + 190px)}.reel-page .frame.still.hascopy .main img{max-height:calc(100svh - var(--fi-t) - var(--fi-b) - 190px)}.frame.still.hascopy .scopy{left:var(--fi-x,16px);right:var(--fi-x,16px);bottom:calc(var(--fi-b,96px) + 10px);max-width:none}.frame.still.hascopy .scopy h2{font-size:1.7rem;margin-bottom:.35em}.frame.still.hascopy .scopy p{font-size:.85rem;line-height:1.4}}
