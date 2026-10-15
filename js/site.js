@@ -54,7 +54,9 @@ if(menu&&burger){
 
 /* ---------- reel viewer: wheel transition ---------- */
 function Reel(stage){
-  var track=$('.track',stage),frames=$$('.frame',track),n=frames.length;
+  var track=$('.track',stage);
+  if(!matchMedia('(max-width:700px)').matches)$$('.frame.mobonly',track).forEach(function(x){x.remove()});
+  var frames=$$('.frame',track),n=frames.length;
   var prev=$('.prev',stage),next=$('.next',stage),dots=$('.dots',stage),shut=$('.shutter',stage),hint=$('.hint',stage);
   var cur=0,last=0,q=[],busy=false,dotBtns=[],pos=$('.pos',stage);
   var home=!!stage.dataset.home;
@@ -211,6 +213,47 @@ function unmountVideo(f){
   try{f._p&&f._p.destroy()}catch(e){}f._p=null;if(fr)fr.remove();
   var snd=$('.vsound',box);if(snd){snd.setAttribute('aria-pressed','false');snd.disabled=true;snd.onclick=null}
 }
+
+
+/* ---------- full screen video (phones): native where allowed, rotated overlay elsewhere ---------- */
+(function(){
+  var cur=null;
+  function done(){
+    if(!cur)return;var b=cur;cur=null;b.classList.remove('fs');document.documentElement.classList.remove('vfs-on');
+    var x=$('.vfs',b);if(x)x.setAttribute('aria-label','Full screen. Turn your phone sideways');
+    try{if(screen.orientation&&screen.orientation.unlock)screen.orientation.unlock()}catch(e){}
+  }
+  function exit(){
+    if(!cur)return;
+    var fe=document.fullscreenElement||document.webkitFullscreenElement;
+    if(fe){try{(document.exitFullscreen||document.webkitExitFullscreen).call(document)}catch(e){}}
+    done();
+  }
+  function enter(box){
+    cur=box;var x=$('.vfs',box);if(x)x.setAttribute('aria-label','Exit full screen');
+    var rq=box.requestFullscreen||box.webkitRequestFullscreen,v=$('video',box);
+    function overlay(){box.classList.add('fs');document.documentElement.classList.add('vfs-on')}
+    if(rq){
+      var p;try{p=rq.call(box)}catch(e){overlay();return}
+      var ok=function(){try{if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(function(){})}catch(e){}};
+      if(p&&p.then)p.then(ok,function(){if(cur)overlay()});else ok();
+    }else if(v&&v.webkitEnterFullscreen){
+      try{v.webkitEnterFullscreen();v.addEventListener('webkitendfullscreen',function(){cur=null},{once:true})}catch(e){overlay()}
+    }else overlay();
+  }
+  function wire(){
+    $$('.vfs').forEach(function(b){if(b._w)return;b._w=1;
+      b.addEventListener('click',function(e){e.stopPropagation();e.preventDefault();var box=b.closest('.vbox');if(cur)exit();else enter(box)});
+      b.addEventListener('pointerdown',function(e){e.stopPropagation()});b.addEventListener('touchstart',function(e){e.stopPropagation()},{passive:true});
+    });
+  }
+  function fsChange(){if(cur&&!(document.fullscreenElement||document.webkitFullscreenElement)&&!cur.classList.contains('fs'))done()}
+  document.addEventListener('fullscreenchange',fsChange);document.addEventListener('webkitfullscreenchange',fsChange);
+  addEventListener('keydown',function(e){if(e.key==='Escape')exit()});
+  /* leaving the frame drops full screen */
+  document.addEventListener('reelchange',exit,true);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',wire);else wire();
+})();
 
 /* ---------- tabletop ---------- */
 function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}

@@ -795,3 +795,55 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 .tablepage .bar .bug{filter:drop-shadow(0 1px 2px rgba(25,10,3,.7))}
 .tablepage .bar .btn-round{background:#2b170c;color:#fff8e6;text-shadow:none;box-shadow:0 2px 0 rgba(0,0,0,.35)}
 .tablepage .bar .chat{background:#f7f0dd;color:#2f6a64;text-shadow:none;box-shadow:0 2px 0 rgba(30,12,3,.4)}
+
+/* ===== mobile: text-first slide 1, hero image becomes slide 2 ===== */
+.frame.mobonly{display:none}
+.vfs{display:none}
+@media (max-width:700px){
+  .frame.mobonly{display:block}
+  .frame.intro:not(.mobonly){background:#1a1617}
+  .frame.intro:not(.mobonly) img.bg,.frame.intro:not(.mobonly) video.bg,.frame.intro.split:not(.mobonly) .side{display:none!important}
+  .frame.intro:not(.mobonly) .amb{inset:-12%;width:124%;height:124%;opacity:1;filter:blur(34px) saturate(1.35) brightness(.78)}
+  .frame.intro:not(.mobonly)::after,.frame.intro.split:not(.mobonly)::after,.frame.intro.hasmeta:not(.mobonly)::after{display:block;background:linear-gradient(175deg,rgba(14,12,13,.30) 0%,rgba(14,12,13,.55) 45%,rgba(14,12,13,.80) 100%)}
+  .frame.intro:not(.mobonly) .copy,.frame.intro.split:not(.mobonly) .copy{left:24px;right:24px;top:84px;bottom:86px;max-width:none;display:flex;flex-direction:column;justify-content:center;gap:.7rem;overflow-y:auto;scrollbar-width:none}
+  .frame.intro:not(.mobonly) .copy::-webkit-scrollbar{display:none}
+  .frame.intro:not(.mobonly) .copy h1{font-size:clamp(2.3rem,11vw,3.1rem);line-height:.98;margin:0}
+  .frame.intro:not(.mobonly) .copy .kicker{font-size:.86rem;letter-spacing:.16em;line-height:1.35;margin:0}
+  .frame.intro:not(.mobonly) .copy p:not(.kicker),.frame.intro.split:not(.mobonly) .copy p:not(.kicker),.frame.intro:not(.mobonly) .copy.hasmeta .ptxt p{display:block;-webkit-line-clamp:unset;overflow:visible;font-size:clamp(1rem,4.5vw,1.12rem);line-height:1.5;margin:0 0 .75em;text-shadow:0 1px 8px rgba(0,0,0,.45)}
+  .frame.intro:not(.mobonly) .copy .meta{display:none}
+  /* slide 2: the hero image on its own, with the facts underneath */
+  .frame.intro.herotwo::after{background:linear-gradient(to top,rgba(18,16,17,.7) 0%,rgba(18,16,17,0) 40%,rgba(18,16,17,0) 84%,rgba(18,16,17,.45) 100%)}
+  .frame.intro.herotwo.hasmeta::after{background:linear-gradient(to top,rgba(18,16,17,.94) 0%,rgba(18,16,17,.78) 34%,rgba(18,16,17,0) 62%,rgba(18,16,17,.4) 100%)}
+  .frame.herotwo .mmeta{position:absolute;z-index:2;left:22px;right:22px;bottom:80px;grid-template-columns:1fr 1fr;gap:.7rem 1.4rem;padding-top:.8rem}
+  .frame.herotwo .mmeta dt{font-size:.74rem}
+  .frame.herotwo .mmeta dd{font-size:.96rem;line-height:1.35}
+  /* full screen button */
+  .vfs{display:grid;position:absolute;right:66px;bottom:12px;z-index:3;width:46px;height:46px;border-radius:50%;border:2px solid #fff;background:rgba(18,16,17,.7);color:#fff;place-items:center;padding:0;cursor:pointer}
+  .vfs svg{width:22px;height:22px}
+  .vbox.fs .vfs{right:14px;top:14px;bottom:auto}
+  .vbox.fs .vfs svg{transform:rotate(45deg)}
+}
+html.vfs-on,html.vfs-on body{overflow:hidden!important}
+.vbox.fs,.vbox:fullscreen{position:fixed!important;z-index:300;inset:0;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;aspect-ratio:auto!important;margin:0!important;border-radius:0!important;background:#000;box-shadow:none!important}
+.vbox:fullscreen{position:static!important}
+@media (orientation:portrait){
+  .vbox.fs:not(:fullscreen){inset:auto;top:0;left:100vw;width:100vh!important;width:100dvh!important;height:100vw!important;transform-origin:top left;transform:rotate(90deg)}
+}
+.vbox.fs video,.vbox:fullscreen video{object-fit:contain}
+/* phone held sideways: give the video the room */
+@media (max-height:520px) and (orientation:landscape){
+  .frame.video .stagev,.reel-page .frame.video .stagev{--fi-t:8px;--fi-b:8px;--fi-x:56px}
+  .frame.video .vcap{display:none}
+}
+@media (max-width:700px){.frame.intro:not(.mobonly) .copy h1{text-wrap:balance}}
+html.vfs-on .bar,html.vfs-on .shutter,html.vfs-on .nav,html.vfs-on .rnav,html.vfs-on .hint,html.vfs-on .skip{visibility:hidden!important}
+.vbox.fs .vfs{visibility:visible!important}
+html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
+@media (max-height:520px) and (orientation:landscape){
+  .frame.intro .copy{bottom:58px;max-height:calc(100% - 130px);overflow-y:auto;scrollbar-width:none;top:auto}
+  .frame.intro .copy::-webkit-scrollbar{display:none}
+  .frame.intro .copy h1{font-size:1.7rem;margin-bottom:.2rem}
+  .frame.intro .copy p,.frame.intro .copy .ptxt p{font-size:.8rem!important;line-height:1.35!important;margin-bottom:.4em}
+  .frame.intro .meta{padding-top:.5rem;gap:.3rem 1.4rem}.frame.intro .meta dd{font-size:.74rem}.frame.intro .meta dt{font-size:.62rem}
+  .hint{display:none}
+}
