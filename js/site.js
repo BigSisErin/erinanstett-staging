@@ -333,7 +333,7 @@ function Manual(m){
       if(kind){var oldV=views[i];busy=true;i=k;
         $$('button',dots).forEach(function(b,x){if(x===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
         prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open':'Turn page \u203a';
-        stat.textContent='Page view '+(i+1)+' of '+views.length;click();
+        stat.textContent='Page view '+(i+1)+' of '+views.length;
         leafAnim(kind,oldV,views[k],function(){busy=false;m.dispatchEvent(new CustomEvent('guideidle'))});m.dispatchEvent(new CustomEvent('guidechange',{detail:i}));return}
     }
     i=k;
@@ -343,7 +343,6 @@ function Manual(m){
     $$('button',dots).forEach(function(b,x){if(x===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
     prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open':'Turn page \u203a';
     stat.textContent='Page view '+(i+1)+' of '+views.length;
-    if(anim&&ch)click();
     m.dispatchEvent(new CustomEvent('guidechange',{detail:i}));
   }
   m._g={show:show,idx:function(){return i},busy:function(){return busy},len:function(){return views.length},mobile:function(){return mq.matches},reduce:reduce};
