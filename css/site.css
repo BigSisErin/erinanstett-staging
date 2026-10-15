@@ -847,3 +847,6 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
   .frame.intro .meta{padding-top:.5rem;gap:.3rem 1.4rem}.frame.intro .meta dd{font-size:.74rem}.frame.intro .meta dt{font-size:.62rem}
   .hint{display:none}
 }
+/* hamburger: tighter bars, and gone once the full nav is showing */
+.burger{align-content:center}.burger span{margin:2px 0}
+@media (min-width:900px){.burger{display:none!important}}
