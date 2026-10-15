@@ -686,6 +686,12 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 /* low-res square posters: never display past native size */
 .reel-page .frame.still .main img[src*="gp_01-bully"],.reel-page .frame.still .main img[src*="gp_04-telenovella"],.reel-page .frame.still .main img[src*="gp_08-dietrich"],.reel-page .frame.still .main img[src*="gp_09-field"],.reel-page .frame.still .main img[src*="gp_10-stuart"],.reel-page .frame.still .main img[src*="gp_12-communist"],.reel-page .frame.still .main img[src*="gp_13-strand"]{width:auto;height:auto;max-width:min(620px,100%);max-height:620px}
 .frame.intro.split .side img{max-height:calc(100svh - 250px)}
+/* Section table pages: sleeve replaces the paper notch header; live text stays in the DOM for SEO/AEO */
+.tablepage .table .tophead .thead.vh{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important;filter:none!important;background:none!important;box-shadow:none!important}
+.tablepage .table .tophead .thead.vh>div{padding:0!important;background:none!important;-webkit-mask:none!important;mask:none!important}
+.topsleeve{position:absolute;left:calc(var(--gutter) - 14px);top:4px;z-index:3;width:clamp(180px,23vw,340px);height:auto;transform:rotate(-7deg);transform-origin:20% 20%;filter:drop-shadow(0 8px 10px rgba(30,20,10,.35)) drop-shadow(0 1px 1px rgba(30,20,10,.5));pointer-events:none}
+@media (max-width:700px){.topsleeve{position:relative;display:block;left:auto;top:auto;margin:6px 0 0 -8px;width:min(52vw,230px)}}
+.tablepage .surface.live .dropsleeve{display:none!important}
 /* FLAT PASS (preview only): printed, not rendered. Flat color, hard offset shadows, grain kept only where it is paper. */
 .tvsec{background:#2b170c!important;box-shadow:none!important}
 .tvsec::before{display:none!important}

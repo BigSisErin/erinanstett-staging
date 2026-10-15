@@ -228,17 +228,17 @@ function Table(surface){
   function layout(){
     var W=surface.clientWidth,d=W<520?180:W<900?240:300,pad=Math.max(14,d*0.14),n=lis.length;
     surface.style.setProperty('--d',d+'px');
-    var tagH=46,rnd=mulberry(seed),placed=[],H,ds=$('.dropsleeve',surface),dsz=d*1.05,dp=null;var th=surface.parentNode.querySelector('.tophead'),top=th?th.offsetTop+th.offsetHeight+14:0;
+    var tagH=46,rnd=mulberry(seed),placed=[],H,ds=$('.dropsleeve',surface),dsz=d*1.05,dp=null;var th=surface.parentNode.querySelector('.tophead'),top=th?th.offsetTop+th.offsetHeight+14:0;var tsl=surface.parentNode.querySelector('.topsleeve'),tsr=null;if(tsl){var sr=surface.getBoundingClientRect(),tr=tsl.getBoundingClientRect();tsr={l:tr.left-sr.left,r:tr.right-sr.left,t:tr.top-sr.top,b:tr.bottom-sr.top};if(W<700)top=Math.max(top,tsr.b+8);else top=Math.max(top,70);}
     if(tidy){
-      var gap=Math.max(18,d*.16),cols=Math.max(1,Math.floor((W-pad*2+gap)/(d+gap))),rows=Math.ceil((n+1)/cols);
+      var o1=(tsl&&W<700)?0:1,gap=Math.max(18,d*.16),cols=Math.max(1,Math.floor((W-pad*2+gap)/(d+gap))),rows=Math.ceil((n+o1)/cols);
       var rowH=d+tagH+gap,usedW=Math.min(n+1,cols)*(d+gap)-gap,x0=(W-usedW)/2;
       H=Math.max(innerHeight,top+rows*rowH+pad*2);
       dp={cx:x0+d/2,cy:top+pad+d/2,rot:0};
-      lis.forEach(function(li,i){var k=i+1,c=k%cols,r=Math.floor(k/cols);placed.push({cx:x0+c*(d+gap)+d/2,cy:top+pad+r*rowH+d/2,rot:0,trot:0,tdx:0})});
+      lis.forEach(function(li,i){var k=i+o1,c=k%cols,r=Math.floor(k/cols);placed.push({cx:x0+c*(d+gap)+d/2,cy:top+pad+r*rowH+d/2,rot:0,trot:0,tdx:0})});
     }else{
       var area=n*Math.pow(d+tagH+70,2)*1.2;H=Math.max(innerHeight,top+Math.ceil(area/Math.max(W,1)));
       var minX=d/2+pad*.5,maxX=W-d/2-pad*.5,minY=top+d/2+pad*.3,maxY=H-d/2-tagH-pad*.6;
-      dp={cx:W-dsz*.18,cy:top+(H-top)*.58,rot:14};placed.push({cx:dp.cx,cy:dp.cy,tdx:0,rect:{l:dp.cx-dsz/2,r:dp.cx+dsz/2,t:dp.cy-dsz/2,b:dp.cy+dsz/2}});
+      dp={cx:W-dsz*.18,cy:top+(H-top)*.58,rot:14};placed.push(tsl?{cx:-9999,cy:-9999,tdx:0,rect:{l:-9999,r:-9998,t:-9999,b:-9998}}:{cx:dp.cx,cy:dp.cy,tdx:0,rect:{l:dp.cx-dsz/2,r:dp.cx+dsz/2,t:dp.cy-dsz/2,b:dp.cy+dsz/2}});
       var base=placed.length;
       lis.forEach(function(li,i){
         var best=null,bestScore=-1e9;
@@ -253,6 +253,7 @@ function Table(surface){
             if(Math.hypot(p.cx-(cx+tdx),p.cy-(cy+d/2+10))<d*.35)hit=true;
             if(Math.hypot(cx-(p.cx+p.tdx),cy-(p.cy+d/2+10))<d*.35)hit=true;
           });
+          if(tsr&&W>=700&&cx>tsr.l-d*.42&&cx<tsr.r+d*.42&&cy>tsr.t-d*.42&&cy<tsr.b+d*.42+tagH)hit=true;
           if(placed.length&&s<d*.78)s-=400;
           if(hit)s-=1000;
           if(s>bestScore){bestScore=s;best={cx:cx,cy:cy,tdx:tdx,rect:rect,rot:(rnd()-.5)*34,trot:(rnd()-.5)*8}}
