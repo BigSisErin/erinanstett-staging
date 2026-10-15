@@ -787,3 +787,11 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 /* tabletop pages: same teak as the landing page */
 .tablepage .table .surface,.tablepage .surface{background:#a4602f url(../img/ui/wood-teak.webp) center/cover no-repeat!important}
 .tablepage .toolbar .pill{background:#f7f0dd;color:#2f6a64;border-color:#2f6a64;box-shadow:0 2px 0 rgba(30,12,3,.35)}.tablepage .toolbar .pill[aria-pressed="true"],.tablepage .toolbar .pill.on{background:#2f6a64;color:#f7f0dd}
+/* tabletop pages: wood bleeds to the top, nav floats on it with no bar */
+.tablepage .bar,.tablepage .bar::before,.tablepage .bar::after{background:none!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.tablepage .bar{color:#fff8e6;text-shadow:0 1px 2px rgba(25,10,3,.85),0 0 10px rgba(25,10,3,.55)}
+.tablepage .bar .links a,.tablepage .bar .crumb{color:#fff8e6;font-weight:700}
+.tablepage .bar .links a:hover{text-decoration:underline;text-underline-offset:5px}
+.tablepage .bar .bug{filter:drop-shadow(0 1px 2px rgba(25,10,3,.7))}
+.tablepage .bar .btn-round{background:#2b170c;color:#fff8e6;text-shadow:none;box-shadow:0 2px 0 rgba(0,0,0,.35)}
+.tablepage .bar .chat{background:#f7f0dd;color:#2f6a64;text-shadow:none;box-shadow:0 2px 0 rgba(30,12,3,.4)}
