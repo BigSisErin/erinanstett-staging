@@ -685,6 +685,7 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 .reel-page .frame.still .main img[src*="fb_08-tap-handles"]{width:auto;height:auto;max-width:min(900px,100%)}
 /* low-res square posters: never display past native size */
 .reel-page .frame.still .main img[src*="gp_01-bully"],.reel-page .frame.still .main img[src*="gp_04-telenovella"],.reel-page .frame.still .main img[src*="gp_08-dietrich"],.reel-page .frame.still .main img[src*="gp_09-field"],.reel-page .frame.still .main img[src*="gp_10-stuart"],.reel-page .frame.still .main img[src*="gp_12-communist"],.reel-page .frame.still .main img[src*="gp_13-strand"]{width:auto;height:auto;max-width:min(620px,100%);max-height:620px}
+.frame.intro.split .side img{max-height:calc(100svh - 250px)}
 /* FLAT PASS (preview only): printed, not rendered. Flat color, hard offset shadows, grain kept only where it is paper. */
 .tvsec{background:#2b170c!important;box-shadow:none!important}
 .tvsec::before{display:none!important}
