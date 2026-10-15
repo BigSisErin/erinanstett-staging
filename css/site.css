@@ -682,6 +682,7 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 .reel-page .frame.still .main img[src*="jc_tagline"]{width:auto;height:auto;max-width:min(650px,100%);max-height:626px}
 .copy p a{color:inherit;text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
 .copy p a:hover,.copy p a:focus-visible{text-decoration-thickness:2px}
+.reel-page .frame.still .main img[src*="fb_08-tap-handles"]{width:auto;height:auto;max-width:min(900px,100%)}
 /* FLAT PASS (preview only): printed, not rendered. Flat color, hard offset shadows, grain kept only where it is paper. */
 .tvsec{background:#2b170c!important;box-shadow:none!important}
 .tvsec::before{display:none!important}
