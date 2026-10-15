@@ -677,3 +677,95 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 .frame.still.hascopy .scopy p{font-size:clamp(.95rem,1.15vw,1.1rem);line-height:1.5;margin:0;color:rgba(255,255,255,.88)}
 @media(min-width:901px){.reel-page .frame.still.hascopy .main{right:calc(var(--fi-x,84px) + 36vw)}.frame.still.hascopy .scopy{right:var(--fi-x,84px);top:50%;transform:translateY(-50%);width:32vw}}
 @media(max-width:900px){.reel-page .frame.still.hascopy .main{bottom:calc(var(--fi-b,96px) + 190px)}.reel-page .frame.still.hascopy .main img{max-height:calc(100svh - var(--fi-t) - var(--fi-b) - 190px)}.frame.still.hascopy .scopy{left:var(--fi-x,16px);right:var(--fi-x,16px);bottom:calc(var(--fi-b,96px) + 10px);max-width:none}.frame.still.hascopy .scopy h2{font-size:1.7rem;margin-bottom:.35em}.frame.still.hascopy .scopy p{font-size:.85rem;line-height:1.4}}
+/* FLAT PASS (preview only): printed, not rendered. Flat color, hard offset shadows, grain kept only where it is paper. */
+.tvsec{background:#2b170c!important;box-shadow:none!important}
+.tvsec::before{display:none!important}
+.trim,.about .abouttrim{background:#9a6236!important;box-shadow:none!important;border-bottom:3px solid #6e4220}
+.trim.bot{border-bottom:0;border-top:3px solid #6e4220}
+.trim b{background:#2b170c!important;box-shadow:none!important}
+.trim .k4{background:#2b170c!important}
+.tv-screen{background:#15110d!important;box-shadow:none!important}
+.tv-screen .hero-stage{box-shadow:none!important}
+.tv-screen .hero-stage::before,.tv-screen .hero-stage::after,.machine::after{background:none!important}
+.panel{background:#b3733f!important;box-shadow:5px 5px 0 #1d0e06!important}
+.tv-grille{background:repeating-linear-gradient(90deg,#d4aa5f 0 6px,#a1722f 6px 9px)!important;box-shadow:none!important;border:3px solid #2b170c}
+.knob{background:#e9b83f!important;box-shadow:0 0 0 3px #2b170c!important}
+.knob::after{background:#f4ecd6!important;box-shadow:none!important}
+.tablepage .bar{background:#2b170c!important;box-shadow:none!important}
+.tablepage .tophead .thead,.tablepage .tophead .thead::before,.tablepage .tophead .thead::after{background-image:none!important;background-color:#2b170c!important;box-shadow:none!important}
+.tablepage .tophead .thead{filter:none!important}
+.tablepage .table .tophead .thead{background:none!important;filter:none!important}
+.tablepage .table .tophead .thead>div{background:#f7f0dd!important}
+.tablepage .table .tophead .thead::before,.tablepage .table .tophead .thead::after{background:#f7f0dd!important}
+#choose{box-shadow:none!important}
+.surface,.table .surface{box-shadow:none!important}
+.table .surface::after{display:none}
+.sleeve-w{filter:drop-shadow(4px 5px 0 rgba(42,21,10,.28))!important}
+.settab{filter:drop-shadow(3px 3px 0 rgba(42,21,10,.28))!important}
+.reels li svg{filter:drop-shadow(4px 5px 0 rgba(42,21,10,.28))!important}
+.sleeve-w .sleeve img,.sleeve-w .peek img{filter:none!important}
+.about{background:#f4ebd2!important}
+.gp{background:#f2e7c9!important;filter:drop-shadow(3px 4px 0 rgba(60,40,15,.28))!important}
+.gp.front,.gp.back{background:none!important}
+.gp.l:not(.back){box-shadow:inset -1px 0 0 rgba(60,40,15,.28)!important}
+.gp.r:not(.front){box-shadow:inset 1px 0 0 rgba(60,40,15,.28)!important}
+.gp.bleed::after{display:none}
+/* sleeves surface: ivory; book surface: teal */
+#choose,.table .surface,.surface{background-image:none!important;background-color:#eadfbd!important}
+.about{background:#2f6a64!important}
+.about .gprev{color:#f4ecd6;border-color:#f4ecd6}
+.about .gdots button{border-color:#f4ecd6}
+.about .gdots button[aria-current=true]{background:#f4ecd6;box-shadow:none}
+/* hero: screen only, centered, no knobs or speaker */
+.tv-ctl{display:none!important}
+.tv{grid-template-columns:minmax(0,1fr)!important;justify-items:center}
+.tv-screen{width:100%;max-width:1360px;margin-inline:auto}
+.tv-screen .hero-stage{max-height:none!important}
+/* hero room: near-black, frame stays visible */
+.tvsec{background:#090706!important}
+.tv-screen{background:#1f1d1b!important}
+.homepage .bar:not(.solid){background:linear-gradient(to bottom,rgba(13,10,8,.85),rgba(13,10,8,0))!important}
+/* home sleeves surface: real teak photo */
+#choose{background:#a4602f url(../img/ui/wood-teak.webp) center/cover no-repeat!important}
+/* sections stack: the one above casts a soft shadow onto the one below, no dividers */
+.trim,.about .abouttrim{display:none!important}
+.tvsec{position:relative;z-index:3;box-shadow:0 16px 26px -12px rgba(0,0,0,.6)!important}
+#choose{position:relative;z-index:2;box-shadow:0 16px 26px -12px rgba(25,12,4,.55)!important}
+.about{z-index:1;box-shadow:0 16px 26px -12px rgba(0,0,0,.5)}
+.apin{position:sticky;top:80px}
+/* glass over the screen only */
+.tv-screen .hero-stage::before{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;border-radius:inherit;
+ background:
+  linear-gradient(112deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.11) calc(16% + var(--gx,.5)*12%),rgba(255,255,255,.045) calc(44% + var(--gx,.5)*12%),rgba(255,255,255,0) calc(44.3% + var(--gx,.5)*12%)),
+  linear-gradient(to bottom,rgba(255,255,255,.13),rgba(255,255,255,0) 20%),
+  radial-gradient(110% 80% at 18% 0%,rgba(255,255,255,.07),transparent 60%)!important;
+ box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),inset 0 2px 0 rgba(255,255,255,.3),inset 0 -2px 0 rgba(0,0,0,.3),inset 0 0 28px rgba(255,255,255,.05)}
+/* more air around the sleeves: extra wood above and below */
+#choose{padding-block:clamp(88px,13vw,200px)!important}
+/* hero arrows */
+.tvarr{position:absolute;top:50%;z-index:8;width:72px;height:96px;margin:-48px 0 0;padding:0;border:0;background:none;color:#f4ecd6;cursor:pointer;display:grid;place-items:center;opacity:0;transition:opacity .35s ease,color .15s,transform .25s;filter:drop-shadow(0 1px 6px rgba(0,0,0,.7))}
+.tvarr.l{left:clamp(4px,1.2vw,18px)}
+.tvarr.r{right:clamp(4px,1.2vw,18px)}
+.tvarr.r svg{transform:scaleX(-1)}
+.tvarr:hover,.tvarr:focus-visible{color:#e8431f}
+.tvarr:focus-visible{opacity:1;outline:2px solid #e8431f;outline-offset:-6px;border-radius:12px}
+.hero-stage.showarr .tvarr{opacity:.9}
+@media (hover:hover) and (pointer:fine){.hero-stage:hover .tvarr{opacity:.85}.hero-stage .tvarr:hover{opacity:1}}
+.hero-stage.showarr .tvarr.l{animation:tvnudgeL 1.1s ease-in-out 2}
+.hero-stage.showarr .tvarr.r{animation:tvnudgeR 1.1s ease-in-out 2}
+@keyframes tvnudgeL{50%{transform:translateX(-7px)}}
+@keyframes tvnudgeR{50%{transform:translateX(7px)}}
+@media (max-width:700px){.tvarr{width:56px;height:80px;margin-top:-40px}.tvarr svg{width:36px;height:36px}}
+/* CRT idle life: always-on, very low amplitude */
+.tvidle{position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;overflow:hidden}
+.tvidle canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.06;mix-blend-mode:overlay}
+.tvidle b{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 1px,transparent 1px 3px),radial-gradient(ellipse 85% 90% at 50% 50%,transparent 62%,rgba(0,0,0,.34) 100%)}
+.tvidle i{position:absolute;left:0;right:0;height:16%;top:-20%;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.05) 35%,rgba(255,255,255,.11) 50%,rgba(255,255,255,.05) 65%,transparent);mix-blend-mode:screen;animation:tvtrack 9s linear infinite;animation-delay:2s}
+.tvidle u{position:absolute;inset:0;background:#000;opacity:0;animation:tvflick 3.1s steps(1,end) infinite}
+@keyframes tvtrack{0%{top:-20%}70%,100%{top:112%}}
+@keyframes tvflick{0%{opacity:0}8%{opacity:.045}10%{opacity:.01}34%{opacity:0}61%{opacity:.035}63%{opacity:0}87%{opacity:.05}89%{opacity:.015}91%{opacity:0}}
+.hero-stage .track{animation:tvjit 7s steps(1,end) infinite}
+@keyframes tvjit{0%,90%{transform:none}91%{transform:translateX(1.5px)}92%{transform:translateX(-1px)}93%{transform:translateX(.5px)}94%,100%{transform:none}}
+.tvidle.paused *{animation-play-state:paused}
+.tvidle.still i,.tvidle.still u{display:none}
+@media (prefers-reduced-motion:reduce){.hero-stage .track{animation:none}.tvidle i,.tvidle u{display:none}.hero-stage.showarr .tvarr{animation:none}}

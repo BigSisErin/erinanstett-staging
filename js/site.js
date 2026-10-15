@@ -424,3 +424,146 @@ document.addEventListener('DOMContentLoaded',function(){
   $$('.surface[data-table]').forEach(Table);
 });
 })();
+
+/* ---------- PREVIEW ONLY: scroll-driven guide + glass screen glare ---------- */
+document.addEventListener('DOMContentLoaded',function(){
+'use strict';
+var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* glass: glare slides a little with the pointer */
+var hs=document.querySelector('.tv-screen .hero-stage');
+if(hs&&!RM){hs.addEventListener('pointermove',function(e){var r=hs.getBoundingClientRect();hs.style.setProperty('--gx',Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)).toFixed(3))});}
+/* scroll-driven book */
+var m=document.querySelector('.guide[data-guide]'),about=document.querySelector('.about');
+if(!m||!m._g||!about)return;
+var g=m._g,pin=document.createElement('div');pin.className='apin';
+m.parentNode.insertBefore(pin,m);pin.appendChild(m);
+var bar=document.querySelector('.bar'),sync=false;
+function vh(){return window.innerHeight}
+function barH(){return bar?bar.offsetHeight:72}
+function dims(){
+  var n=g.len(),h=vh(),mob=g.mobile();
+  var d={dwell:.55*h,step:(mob?.38:.45)*h,tail:.4*h};
+  d.total=d.dwell+(n-2)*d.step+d.tail;
+  var top=Math.max(barH()+8,(h-pin.offsetHeight)/2);d.top=top;
+  return d;
+}
+var D=dims();
+function layout(){
+  D=dims();pin.style.top=D.top+'px';
+  var cs=getComputedStyle(about),pt=parseFloat(cs.paddingTop)||0,pb=parseFloat(cs.paddingBottom)||0;
+  about.style.height=(pt+pin.offsetHeight+D.total+pb)+'px';
+  about._pt=pt;
+}
+layout();
+function scrolled(){return D.top-(about.getBoundingClientRect().top+about._pt)}
+function targetView(){
+  var s=scrolled(),n=g.len();
+  if(s<D.dwell)return 0;
+  return Math.min(n-1,1+Math.floor((s-D.dwell)/D.step));
+}
+function absStart(){return about.getBoundingClientRect().top+window.scrollY+about._pt-D.top}
+function drive(){
+  if(sync)return;
+  var t=targetView(),i=g.idx();
+  if(t===i)return;
+  if(g.mobile()||g.reduce){g.show(t,true);return}
+  if(g.busy())return;
+  g.show(i+(t>i?1:-1),true);
+}
+var tick=false;
+addEventListener('scroll',function(){if(tick)return;tick=true;requestAnimationFrame(function(){tick=false;drive()})},{passive:true});
+m.addEventListener('guideidle',drive);
+/* arrows, dots, keys and swipe keep working: move the page to match */
+m.addEventListener('guidechange',function(e){
+  var k=e.detail;if(targetView()===k)return;
+  sync=true;
+  var y=absStart()+(k===0?D.dwell*.5:D.dwell+(k-1)*D.step+D.step*.5);
+  window.scrollTo({top:y,behavior:'auto'});
+  setTimeout(function(){sync=false},120);
+});
+addEventListener('resize',function(){layout();drive()});
+addEventListener('load',layout);
+});
+
+/* ---------- PREVIEW ONLY: hero arrows, CRT idle life, channel-switch sound ---------- */
+document.addEventListener('DOMContentLoaded',function(){
+'use strict';
+var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var stage=document.querySelector('.tv-screen .hero-stage');
+if(!stage||!stage._reel)return;
+var R=stage._reel,touch=!(window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches);
+
+/* ----- arrows: hover on desktop, a few beats on touch ----- */
+var svg='<svg viewBox="0 0 24 24" width="44" height="44" aria-hidden="true" focusable="false"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function arrow(dir){
+  var b=document.createElement('button');b.type='button';b.className='tvarr '+(dir<0?'l':'r');
+  b.setAttribute('aria-label',dir<0?'Previous work':'Next work');b.innerHTML=svg;
+  b.addEventListener('click',function(e){e.stopPropagation();R.step(dir)});
+  stage.appendChild(b);return b;
+}
+arrow(-1);arrow(1);
+var hideT=0;
+function flash(ms){stage.classList.add('showarr');clearTimeout(hideT);hideT=setTimeout(function(){stage.classList.remove('showarr')},ms)}
+if('IntersectionObserver' in window){
+  var seen=false,io=new IntersectionObserver(function(es){
+    es.forEach(function(en){if(en.isIntersecting&&en.intersectionRatio>=.55&&!seen){seen=true;setTimeout(function(){flash(touch?3400:2200)},700)}});
+  },{threshold:[.55]});io.observe(stage);
+}
+if(touch)stage.addEventListener('pointerup',function(){flash(2200)},{passive:true});
+
+/* ----- CRT idle layer: scanlines, soft noise, slow tracking band, flicker ----- */
+var idle=document.createElement('div');idle.className='tvidle';idle.setAttribute('aria-hidden','true');
+var cv=document.createElement('canvas'),W=256,H=144;cv.width=W;cv.height=H;idle.appendChild(cv);
+['b','i','u'].forEach(function(t){idle.appendChild(document.createElement(t))});
+stage.appendChild(idle);
+var g=cv.getContext('2d'),frames=[],NF=6;
+for(var f=0;f<NF;f++){var im=g.createImageData(W,H),d=im.data;for(var k=0;k<d.length;k+=4){var v=(Math.random()*255)|0;d[k]=d[k+1]=d[k+2]=v;d[k+3]=255}frames.push(im)}
+g.putImageData(frames[0],0,0);
+if(!RM){
+  var on=false,vis=true,t0=0,fi=0,raf=0;
+  function tick(now){
+    raf=requestAnimationFrame(tick);
+    if(now-t0<90)return;t0=now;fi=(fi+1+((Math.random()*2)|0))%NF;g.putImageData(frames[fi],0,0);
+  }
+  function upd(){var want=vis&&!document.hidden;if(want&&!on){on=true;raf=requestAnimationFrame(tick)}else if(!want&&on){on=false;cancelAnimationFrame(raf)}}
+  if('IntersectionObserver' in window)new IntersectionObserver(function(es){vis=es[0].isIntersecting;idle.classList.toggle('paused',!vis);upd()}).observe(stage);
+  document.addEventListener('visibilitychange',upd);upd();
+}else idle.classList.add('still');
+
+/* ----- channel switch sound: dull click, then static that follows the on-screen static ----- */
+function noiseBuf(c,sec){var n=Math.floor(c.sampleRate*sec),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=Math.random()*2-1;return b}
+function snd(ms){
+  var E=window.__ea;if(!E||E.muted())return;var c=E.ctx();if(!c)return;
+  function go(){
+    var t=c.currentTime+0.005,dur=ms/1000;
+    /* dull click: low thump plus a muffled tick */
+    var o=c.createOscillator(),og=c.createGain();o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(48,t+0.06);
+    og.gain.setValueAtTime(0.0001,t);og.gain.linearRampToValueAtTime(0.55,t+0.004);og.gain.exponentialRampToValueAtTime(0.001,t+0.09);
+    o.connect(og);og.connect(c.destination);o.start(t);o.stop(t+0.1);
+    var tk=c.createBufferSource();tk.buffer=noiseBuf(c,0.05);
+    var lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=900;
+    var tg=c.createGain();tg.gain.setValueAtTime(0.35,t);tg.gain.exponentialRampToValueAtTime(0.001,t+0.04);
+    tk.connect(lp);lp.connect(tg);tg.connect(c.destination);tk.start(t);
+    /* static: envelope matches the screen (up by 18%, easing to 62%, gone at 100%) */
+    var s0=t+0.035,sd=Math.max(0.15,dur-0.035);
+    var ns=c.createBufferSource();ns.buffer=noiseBuf(c,Math.min(1.2,sd+0.1));
+    var hp=c.createBiquadFilter();hp.type='highpass';hp.frequency.value=700;
+    var bp=c.createBiquadFilter();bp.type='lowpass';bp.frequency.value=7000;
+    var sg=c.createGain();sg.gain.setValueAtTime(0.0001,s0);
+    sg.gain.linearRampToValueAtTime(0.2,s0+sd*0.16);
+    sg.gain.linearRampToValueAtTime(0.15,s0+sd*0.6);
+    sg.gain.linearRampToValueAtTime(0.0001,s0+sd);
+    /* crackle: gate the noise at roughly the on-screen refresh rate */
+    var gate=c.createGain();gate.gain.value=0.75;
+    var lfo=c.createOscillator(),lg=c.createGain();lfo.type='square';lfo.frequency.value=22;lg.gain.value=0.25;lfo.connect(lg);lg.connect(gate.gain);lfo.start(s0);lfo.stop(s0+sd+0.05);
+    ns.connect(hp);hp.connect(bp);bp.connect(gate);gate.connect(sg);sg.connect(c.destination);ns.start(s0);ns.stop(s0+sd+0.05);
+  }
+  if(c.state==='running')go();
+  else{var t1=Date.now();try{var r=c.resume();if(r&&r.then)r.then(function(){if(!E.muted()&&c.state==='running'&&Date.now()-t1<400)go()}).catch(function(){})}catch(e){}}
+}
+var fx0=stage._fx;
+window.__tvSnd=snd;
+stage._fx=function(ms){if(fx0)fx0(ms);snd(ms)};
+/* reduced motion has no static on screen, so only the click */
+if(RM)stage._fx=function(){snd(120)};
+});
