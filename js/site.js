@@ -32,6 +32,7 @@ function click(){
   var t0=Date.now();
   try{var r=ctx.resume();if(r&&r.then)r.then(function(){if(!muted&&ctx.state==='running'&&Date.now()-t0<400)play()}).catch(function(){})}catch(e){}
 }
+window.__ea={ctx:function(){return ctx},muted:function(){return muted},unlock:unlock};
 function syncSound(){
   $$('.snd,.vsound,.dial.vol').forEach(function(b){b.setAttribute('aria-pressed',muted?'false':'true');b.setAttribute('aria-label',muted?'Sound off. Turn sound on':'Sound on. Turn sound off')});
 }
@@ -66,7 +67,7 @@ function Reel(stage){
   }
   function active(i){
     var changed=i!==cur;cur=i;
-    if(changed){click();if(hint)hint.classList.add('gone')}
+    if(changed){if(!(home&&window.__tvSnd))click();if(hint)hint.classList.add('gone')}
     dotBtns.forEach(function(b,k){if(k===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
     if(pos)pos.textContent=(i+1)+' / '+n;
     stage.dispatchEvent(new CustomEvent('reelchange',{detail:i}));
@@ -74,6 +75,8 @@ function Reel(stage){
     frames.forEach(function(f,k){f.setAttribute('aria-hidden',k===i?'false':'true');f.inert=k!==i;
       if(f.dataset.vimeo||f.dataset.yt||f.dataset.mp4){k===i?mountVideo(f):unmountVideo(f)}});
   }
+  function bgv(){frames.forEach(function(f,k){var v=$('video.bgv',f);if(!v)return;if(!v.src&&v.dataset.src)v.src=v.dataset.src;if(RM){v.pause();return}if(k===cur){var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()})}
+  stage.addEventListener('reelchange',bgv);setTimeout(bgv,0);
   function enqueue(i,dir){q.push({i:i,dir:dir});last=i;if(!busy)run()}
   function step(d){enqueue((last+d+n)%n,d)}
   function run(){
@@ -165,7 +168,7 @@ function mountVideo(f){
   if(f.dataset.yt){mountYT(f,box);return}
   if(f.dataset.mp4){mountMP4(f,box);return}
   var id=f.dataset.vimeo,h=f.dataset.vh;
-  function url(m){return 'https://player.vimeo.com/video/'+id+'?title=0&byline=0&portrait=0&playsinline=1&dnt=1&loop=1&muted='+(m?1:0)+'&autoplay='+(RM?0:1)+'&controls='+(RM?1:0)+(h?'&h='+h:'')}
+  function url(m){return 'https://player.vimeo.com/video/'+id+'?title=0&byline=0&portrait=0&playsinline=1&dnt=1&loop=1&muted='+(m?1:0)+'&autoplay='+(RM?0:1)+'&controls='+(RM?1:0)+(h?'&h='+h:'')+(f.dataset.vs?'#t='+f.dataset.vs+'s':'')}
   var fr=document.createElement('iframe');
   fr.src=url(true);fr.allow='autoplay; fullscreen; picture-in-picture';fr.setAttribute('title',f.dataset.title||'Video');fr.setAttribute('loading','lazy');
   box.insertBefore(fr,box.firstChild);
@@ -330,7 +333,7 @@ function Manual(m){
         $$('button',dots).forEach(function(b,x){if(x===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
         prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open':'Turn page \u203a';
         stat.textContent='Page view '+(i+1)+' of '+views.length;click();
-        leafAnim(kind,oldV,views[k],function(){busy=false});return}
+        leafAnim(kind,oldV,views[k],function(){busy=false;m.dispatchEvent(new CustomEvent('guideidle'))});m.dispatchEvent(new CustomEvent('guidechange',{detail:i}));return}
     }
     i=k;
     ps.forEach(function(p){p.classList.remove('on','enter-r','enter-l');p.inert=true;p.setAttribute('aria-hidden','true')});
@@ -340,7 +343,9 @@ function Manual(m){
     prev.hidden=i===0;next.hidden=i===views.length-1;next.textContent=i===0?'Open':'Turn page \u203a';
     stat.textContent='Page view '+(i+1)+' of '+views.length;
     if(anim&&ch)click();
+    m.dispatchEvent(new CustomEvent('guidechange',{detail:i}));
   }
+  m._g={show:show,idx:function(){return i},busy:function(){return busy},len:function(){return views.length},mobile:function(){return mq.matches},reduce:reduce};
   m.addEventListener('click',function(e){var t=e.target.closest('[data-g]');if(!t)return;show(t.dataset.g==='next'?i+1:i-1,true)});
   m.setAttribute('tabindex','0');
   m.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();show(i+1,true)}else if(e.key==='ArrowLeft'){e.preventDefault();show(i-1,true)}});
