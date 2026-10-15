@@ -784,3 +784,6 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 .tvidle.paused *{animation-play-state:paused}
 .tvidle.still i,.tvidle.still u{display:none}
 @media (prefers-reduced-motion:reduce){.hero-stage .track{animation:none}.tvidle i,.tvidle u{display:none}.hero-stage.showarr .tvarr{animation:none}}
+/* tabletop pages: same teak as the landing page */
+.tablepage .table .surface,.tablepage .surface{background:#a4602f url(../img/ui/wood-teak.webp) center/cover no-repeat!important}
+.tablepage .toolbar .pill{background:#f7f0dd;color:#2f6a64;border-color:#2f6a64;box-shadow:0 2px 0 rgba(30,12,3,.35)}.tablepage .toolbar .pill[aria-pressed="true"],.tablepage .toolbar .pill.on{background:#2f6a64;color:#f7f0dd}
