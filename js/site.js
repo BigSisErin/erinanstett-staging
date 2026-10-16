@@ -57,7 +57,7 @@ function click(dl){   /* dl: seconds to wait, so the click lands with the moveme
   var t0=Date.now();
   try{var r=ctx.resume();if(r&&r.then)r.then(function(){if(!muted&&ctx.state==='running'&&Date.now()-t0<400)play(dl)}).catch(function(){})}catch(e){}
 }
-window.__ea={ctx:function(){return ctx},muted:function(){return muted},unlock:unlock};
+window.__ea={ctx:function(){return ctx},muted:function(){return muted},unlock:unlock,base:function(){return CLKBASE}};
 function syncSound(){
   $$('.snd,.vsound,.dial.vol').forEach(function(b){b.setAttribute('aria-pressed',muted?'false':'true');b.setAttribute('aria-label',muted?'Sound off. Turn sound on':'Sound on. Turn sound off')});
 }
@@ -688,7 +688,16 @@ if(!RM){
 
 /* ----- channel switch sound: dull click, then static that follows the on-screen static ----- */
 function noiseBuf(c,sec){var n=Math.floor(c.sampleRate*sec),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=Math.random()*2-1;return b}
+var ST={buf:null,on:false};
+function loadStatic(){
+  var E=window.__ea,c=E&&E.ctx();if(!c||ST.on||!window.fetch)return;ST.on=true;
+  fetch(E.base()+'tv-static.mp3').then(function(r){return r.arrayBuffer()}).then(function(ab){
+    return new Promise(function(res,rej){var p=c.decodeAudioData(ab,res,rej);if(p&&p.catch)p.catch(rej)})
+  }).then(function(b){ST.buf=b}).catch(function(){ST.on=false});
+}
+loadStatic();
 function snd(ms){
+  loadStatic();
   var E=window.__ea;if(!E||E.muted())return;var c=E.ctx();if(!c)return;
   function go(){
     var t=c.currentTime+0.005,dur=ms/1000;
@@ -700,19 +709,17 @@ function snd(ms){
     var lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=900;
     var tg=c.createGain();tg.gain.setValueAtTime(0.35,t);tg.gain.exponentialRampToValueAtTime(0.001,t+0.04);
     tk.connect(lp);lp.connect(tg);tg.connect(c.destination);tk.start(t);
-    /* static: envelope matches the screen (up by 18%, easing to 62%, gone at 100%) */
+    /* static: a random bit of the recorded TV static each time; envelope matches the screen (up by 18%, easing to 62%, gone at 100%) */
     var s0=t+0.035,sd=Math.max(0.15,dur-0.035);
-    var ns=c.createBufferSource();ns.buffer=noiseBuf(c,Math.min(1.2,sd+0.1));
-    var hp=c.createBiquadFilter();hp.type='highpass';hp.frequency.value=700;
-    var bp=c.createBiquadFilter();bp.type='lowpass';bp.frequency.value=7000;
+    var ns=c.createBufferSource(),rate=.93+Math.random()*.14,use=ST.buf,len=sd+0.1;
+    if(use&&use.duration>len*rate+0.3){ns.buffer=use;ns.playbackRate.value=rate;ns.__off=0.05+Math.random()*(use.duration-len*rate-0.15)}
+    else{ns.buffer=noiseBuf(c,Math.min(1.2,len));ns.__off=0}
     var sg=c.createGain();sg.gain.setValueAtTime(0.0001,s0);
-    sg.gain.linearRampToValueAtTime(0.2,s0+sd*0.16);
-    sg.gain.linearRampToValueAtTime(0.15,s0+sd*0.6);
+    var top=ns.__off?0.75:0.2;
+    sg.gain.linearRampToValueAtTime(top,s0+sd*0.16);
+    sg.gain.linearRampToValueAtTime(top*0.75,s0+sd*0.6);
     sg.gain.linearRampToValueAtTime(0.0001,s0+sd);
-    /* crackle: gate the noise at roughly the on-screen refresh rate */
-    var gate=c.createGain();gate.gain.value=0.75;
-    var lfo=c.createOscillator(),lg=c.createGain();lfo.type='square';lfo.frequency.value=22;lg.gain.value=0.25;lfo.connect(lg);lg.connect(gate.gain);lfo.start(s0);lfo.stop(s0+sd+0.05);
-    ns.connect(hp);hp.connect(bp);bp.connect(gate);gate.connect(sg);sg.connect(c.destination);ns.start(s0);ns.stop(s0+sd+0.05);
+    ns.connect(sg);sg.connect(c.destination);ns.start(s0,ns.__off);ns.stop(s0+sd+0.05);
   }
   if(c.state==='running')go();
   else{var t1=Date.now();try{var r=c.resume();if(r&&r.then)r.then(function(){if(!E.muted()&&c.state==='running'&&Date.now()-t1<400)go()}).catch(function(){})}catch(e){}}
