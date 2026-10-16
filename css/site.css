@@ -1025,8 +1025,8 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .vhs-b{top:-1px;background:#0b0807}
 .homepage #choose.open{padding-bottom:calc(clamp(120px,14vw,200px) + 24px)!important}
 /* one sleeve size everywhere: idle, selected, empty, stacked */
-:root{--slv:clamp(330px,32vw,457px)}
-@media (max-width:700px){:root{--slv:min(88vw,380px)}}
+:root{--slv:clamp(310px,29.7vw,427px)}
+@media (max-width:700px){:root{--slv:min(85vw,355px)}}
 .homepage .sleeve-w{width:var(--slv)}
 .spillhead{width:var(--slv)!important}
 .spill .topsleeve{width:100%!important}
@@ -1065,7 +1065,7 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .spill-others a:hover,.spill-others a:focus-visible{filter:brightness(1) saturate(1) drop-shadow(0 2px 2px rgba(0,0,0,.7)) drop-shadow(0 20px 18px rgba(0,0,0,.55))!important}
 
 /* +15% sleeves everywhere */
-.sleeve-w{width:min(100%,520px)}
+.sleeve-w{width:min(100%,485px)}
 .homepage .sleeve-w{width:var(--slv)}
 .spill-others a .sleeve-w{width:100%!important}
 
@@ -1075,3 +1075,6 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 
 .vhs{height:clamp(96px,11vw,170px)}
 .homepage .block.about{padding-top:calc(clamp(96px,11vw,170px) + clamp(20px,4vw,60px))!important}
+/* home sleeves: a sliver of wood between them, never flush */
+@media (min-width:701px){.homepage .sleeves{display:flex!important;flex-wrap:nowrap;justify-content:center;gap:clamp(12px,1.5vw,24px)!important}}
+@media (max-width:700px){.homepage .sleeves{display:flex!important;flex-direction:column;align-items:center;gap:22px!important}}
