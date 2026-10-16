@@ -916,7 +916,7 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .homepage .sleeve-w:nth-child(1){rotate:-1.6deg}.homepage .sleeve-w:nth-child(2){rotate:.9deg}.homepage .sleeve-w:nth-child(3){rotate:-.7deg}
 
 /* ===== About: collapsed list, index-style ===== */
-.homepage .block.about{background:#e9efe8!important;color:#2b2f33;padding:calc(168px + clamp(28px,5vw,72px)) 0 clamp(56px,8vw,120px);position:relative;z-index:2}
+.homepage .block.about{background:#e9efe8!important;color:#2b2f33;padding:calc(260px + clamp(20px,4vw,60px)) 0 clamp(56px,8vw,120px);position:relative;z-index:2}
 .homepage .about .abouttrim{display:none}
 .ab{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:0 clamp(32px,6vw,88px);align-items:start;max-width:1040px;margin:0 auto}
 .abl{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding-right:clamp(20px,4vw,56px);border-right:1px solid #8a968d;min-height:100%}
@@ -1000,7 +1000,22 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 /* pixel-dither seams between sections (replaces the soft gradients) */
 .homepage #choose{position:relative}
 .homepage #choose>.wrap{position:relative;z-index:1}
-.homepage #choose::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:168px;background:#0b0807;-webkit-mask:url(../img/ui/dither.png) left top/1536px 168px repeat-x;mask:url(../img/ui/dither.png) left top/1536px 168px repeat-x;pointer-events:none;z-index:0}
-.homepage #choose{padding-bottom:calc(168px + clamp(0px,2vw,24px))!important}
-.homepage .block.about::before{content:"";position:absolute;left:0;right:0;top:-1px;height:168px;background:#0b0807;transform:scaleY(-1);-webkit-mask:url(../img/ui/dither.png) left top/1536px 168px repeat-x;mask:url(../img/ui/dither.png) left top/1536px 168px repeat-x;pointer-events:none}
+.homepage #choose::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:340px;background:#0b0807;-webkit-mask:url(../img/ui/dither.png) left top/1536px 340px repeat-x;mask:url(../img/ui/dither.png) left top/1536px 340px repeat-x;pointer-events:none;z-index:0}
+.homepage #choose{padding-bottom:calc(240px + clamp(0px,2vw,24px))!important}
+.homepage .block.about::before{content:"";position:absolute;left:0;right:0;top:-1px;height:340px;background:#0b0807;transform:scaleY(-1);-webkit-mask:url(../img/ui/dither.png) left top/1536px 340px repeat-x;mask:url(../img/ui/dither.png) left top/1536px 340px repeat-x;pointer-events:none}
 .homepage .worked{margin-top:-2px}
+
+/* empty sleeve dims so wheels read; other sleeves stack below the list */
+.spill .topsleeve{filter:brightness(.42) saturate(.65) drop-shadow(0 6px 8px rgba(0,0,0,.5))}
+.spill-grid{grid-template-areas:"stage tabs" "stage list" "stage others";grid-template-rows:auto auto 1fr}
+.spill-others{grid-area:others;position:relative;display:flex;justify-content:flex-end;align-items:flex-start;padding:28px 6px 0 0;min-height:200px}
+.spill-others a{display:block;width:clamp(150px,13vw,190px);filter:brightness(.5) saturate(.7) drop-shadow(0 4px 6px rgba(0,0,0,.55));transition:filter .45s ease,transform .4s cubic-bezier(.3,.7,.2,1);position:relative}
+.spill-others a img{display:block;width:100%;height:auto}
+.spill-others a:nth-child(1){transform:rotate(-5deg);z-index:1}
+.spill-others a:nth-child(2){transform:rotate(4deg) translateY(26px);margin-left:-70px;z-index:2}
+.spill-others a:hover,.spill-others a:focus-visible{filter:brightness(1) saturate(1) drop-shadow(0 14px 14px rgba(0,0,0,.55));z-index:5}
+.spill-others a:nth-child(1):hover,.spill-others a:nth-child(1):focus-visible{transform:rotate(-3deg) translateY(-10px)}
+.spill-others a:nth-child(2):hover,.spill-others a:nth-child(2):focus-visible{transform:rotate(2deg) translateY(14px)}
+@media (max-width:900px){.spill-grid{grid-template-areas:"tabs" "stage" "list" "others"}.spill-others{justify-content:center;padding-top:20px}}
+@media (prefers-reduced-motion:reduce){.spill-others a{transition:none}}
+#choose.open{padding-bottom:calc(300px + clamp(0px,2vw,24px))!important}
