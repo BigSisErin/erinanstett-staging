@@ -879,3 +879,6 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .tlist a:hover b{color:#fff;text-decoration:underline;text-underline-offset:4px}
 @media (max-width:520px){.tlist a{flex-direction:column;gap:2px}.tlist a span{text-align:left}}
 @media (max-width:700px){.frame.note .nbox{padding-top:68px;padding-bottom:44px}.frame.note .nbox p:not(.kicker){font-size:.95rem;line-height:1.5}}
+/* wheel images keep their tilt on hover (colour comes back, no spin) */
+.wheel .wimg{transition:filter .4s ease!important}
+.reels li:hover .wimg,.reels li.hot .wimg,.reels a.disc:focus-visible .wimg,.wheel:hover .wimg{transform:rotate(var(--a))!important}
