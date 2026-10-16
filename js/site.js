@@ -41,21 +41,21 @@ function pickClick(){
   if(l.length>1&&l[l.length-1]===l[l.length-2])k=l[l.length-1]==='a'?'b':'a';   /* never the same sample three times running */
   l.push(k);if(l.length>2)l.shift();return k;
 }
-function playClick(){
+function playClick(dl){
   if(!CLK.a||!CLK.b)return false;
   var k=pickClick(),src=ctx.createBufferSource(),g=ctx.createGain();
   src.buffer=CLK[k];src.playbackRate.value=.93+Math.random()*.15;
   g.gain.value=(k==='a'?.95:.8)*(.72+Math.random()*.28);
-  src.connect(g);g.connect(ctx.destination);src.start(ctx.currentTime);return true;
+  src.connect(g);g.connect(ctx.destination);src.start(ctx.currentTime+(dl||0));return true;
 }
-function play(){if(playClick())return;var t=ctx.currentTime;clack(t,2300,0.5);clack(t+0.075,1500,0.38)}
+function play(dl){if(playClick(dl))return;var t=ctx.currentTime+(dl||0);clack(t,2300,0.5);clack(t+0.075,1500,0.38)}
 (function(){try{var AC=window.AudioContext||window.webkitAudioContext;if(AC&&!ctx){ctx=new AC();loadClicks()}}catch(e){}})();  /* start decoding the samples at page load; resume() still waits for a gesture */
-function click(){
+function click(dl){   /* dl: seconds to wait, so the click lands with the movement rather than the tap */
   if(muted||!ctx)return;
-  if(ctx.state==='running'){play();return}
+  if(ctx.state==='running'){play(dl);return}
   /* first gesture: context is still waking up, so play once it is running (only if that is immediate) */
   var t0=Date.now();
-  try{var r=ctx.resume();if(r&&r.then)r.then(function(){if(!muted&&ctx.state==='running'&&Date.now()-t0<400)play()}).catch(function(){})}catch(e){}
+  try{var r=ctx.resume();if(r&&r.then)r.then(function(){if(!muted&&ctx.state==='running'&&Date.now()-t0<400)play(dl)}).catch(function(){})}catch(e){}
 }
 window.__ea={ctx:function(){return ctx},muted:function(){return muted},unlock:unlock};
 function syncSound(){
@@ -94,7 +94,7 @@ function Reel(stage){
   }
   function active(i){
     var changed=i!==cur;cur=i;
-    if(changed){if(!(home&&window.__tvSnd))click();if(hint)hint.classList.add('gone')}
+    if(changed){if(!(home&&window.__tvSnd))click(.25);if(hint)hint.classList.add('gone')}
     dotBtns.forEach(function(b,k){if(k===i)b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')});
     if(pos)pos.textContent=(i+1)+' / '+n;
     stage.dispatchEvent(new CustomEvent('reelchange',{detail:i}));
