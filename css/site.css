@@ -1126,3 +1126,7 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .spill-others a:nth-child(1):hover,.spill-others a:nth-child(1):focus-visible{transform:rotate(-5deg) translateY(-8px)!important}
 .spill-others a:nth-child(2):hover,.spill-others a:nth-child(2):focus-visible{transform:rotate(3.5deg) translateY(-8px)!important}
 @media (max-width:900px){.spill-others a:nth-child(1){left:2vw}.spill-others a:nth-child(2){right:2vw}}
+
+/* open sleeve: lighter than the sleeves below it, and clicking it closes the drawer */
+.spill .topsleeve{filter:brightness(.8) saturate(.9) drop-shadow(0 6px 8px rgba(0,0,0,.5))!important;pointer-events:auto;cursor:pointer;transition:filter .3s ease}
+.spill .topsleeve:hover{filter:brightness(1) saturate(1) drop-shadow(0 10px 12px rgba(0,0,0,.55))!important}

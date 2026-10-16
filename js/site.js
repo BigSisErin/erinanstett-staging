@@ -372,7 +372,7 @@ function Bench(root){
     if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
     var a=e.target.closest&&e.target.closest('a[href]');
     if(a){var s=slugOf(a);if(s&&SL[s]){e.preventDefault();var mn=$('#menu');if(mn&&!mn.hidden){var cl=$('.close',mn);cl&&cl.click()}open(s,true);return}}
-    if(e.target.closest&&e.target.closest('.spill-x'))close(true);
+    if(e.target.closest&&e.target.closest('.spill-x,.spillhead'))close(true);
   });
   addEventListener('keydown',function(e){if(e.key==='Escape'&&cur&&!document.querySelector('.menu:not([hidden])'))close(true)});
   function fromHash(){var h=(location.hash||'').slice(1);if(SL[h]){if(h!==cur){if(cur)show(h,true);else open(h,false,true)}}else if(cur)close(false)}
