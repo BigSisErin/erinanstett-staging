@@ -944,7 +944,8 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .abl .soc{margin:22px 0 0;align-self:flex-end;font:700 .62rem/1 var(--ff-body);letter-spacing:.16em;text-transform:uppercase}
 .abl .soc a{color:inherit;text-decoration:none;border-bottom:1px solid transparent}.abl .soc a:hover{border-color:currentColor}
 .abr h2{margin:0 0 .5rem;font:500 clamp(1.7rem,3vw,2.15rem)/1.1 var(--ff-display);font-stretch:75%;letter-spacing:.005em;color:#16191c}
-.abr .lede{margin:0 0 clamp(28px,4vw,44px);max-width:46ch;font-size:.98rem;line-height:1.55}
+.abr .lede{margin:0 0 .9rem;max-width:46ch;font-size:.98rem;line-height:1.55}
+.abr .lede:last-of-type{margin-bottom:clamp(28px,4vw,44px)}
 .acc{border-top:1px solid #8a968d;position:relative}
 .acc .row{border-bottom:1px solid #8a968d;position:relative}
 .acc .row::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:#2b2f33;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.3,.7,.2,1)}
