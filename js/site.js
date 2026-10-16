@@ -4,12 +4,13 @@ var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches
 var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 
-/* ---------- sound: synthesized plastic click, no audio file ---------- */
+/* ---------- sound: recorded click samples (synth click kept as fallback) ---------- */
 var ctx=null,muted=false;
 try{muted=localStorage.getItem('ea-sound')==='off'}catch(e){}
 function unlock(){
   if(!ctx){try{var AC=window.AudioContext||window.webkitAudioContext;if(AC)ctx=new AC()}catch(e){}}
   if(ctx&&ctx.state!=='running'&&ctx.resume){try{var r=ctx.resume();if(r&&r.catch)r.catch(function(){})}catch(e){}}
+  loadClicks();
 }
 /* touch browsers only grant audio on touchend/pointerup/click, not touchstart */
 ['pointerdown','pointerup','touchend','click','keydown'].forEach(function(ev){addEventListener(ev,unlock,{passive:true,capture:true})});
@@ -24,7 +25,31 @@ function clack(t,f,gain){
   og.gain.setValueAtTime(gain*0.55,t);og.gain.exponentialRampToValueAtTime(0.001,t+0.05);
   o.connect(og);og.connect(ctx.destination);o.start(t);o.stop(t+0.06);
 }
-function play(){var t=ctx.currentTime;clack(t,2300,0.5);clack(t+0.075,1500,0.38)}
+/* real click recordings (two samples), shuffled with a little pitch and level drift so no two transitions sound identical */
+var CLK={a:null,b:null,on:false,last:[]};
+var CLKBASE=(function(){var sc=document.currentScript||document.querySelector('script[src*="js/site.js"]');try{return new URL('../audio/',sc.src).href}catch(e){return 'audio/'}})();
+function loadClicks(){
+  if(CLK.on||!ctx||!window.fetch)return;CLK.on=true;
+  ['a','b'].forEach(function(k){
+    fetch(CLKBASE+'click-'+k+'.wav').then(function(r){return r.arrayBuffer()}).then(function(ab){
+      return new Promise(function(res,rej){var p=ctx.decodeAudioData(ab,res,rej);if(p&&p.catch)p.catch(rej)})
+    }).then(function(b){CLK[k]=b}).catch(function(){CLK.on=false});
+  });
+}
+function pickClick(){
+  var l=CLK.last,k=Math.random()<.5?'a':'b';
+  if(l.length>1&&l[l.length-1]===l[l.length-2])k=l[l.length-1]==='a'?'b':'a';   /* never the same sample three times running */
+  l.push(k);if(l.length>2)l.shift();return k;
+}
+function playClick(){
+  if(!CLK.a||!CLK.b)return false;
+  var k=pickClick(),src=ctx.createBufferSource(),g=ctx.createGain();
+  src.buffer=CLK[k];src.playbackRate.value=.93+Math.random()*.15;
+  g.gain.value=(k==='a'?.95:.8)*(.72+Math.random()*.28);
+  src.connect(g);g.connect(ctx.destination);src.start(ctx.currentTime);return true;
+}
+function play(){if(playClick())return;var t=ctx.currentTime;clack(t,2300,0.5);clack(t+0.075,1500,0.38)}
+(function(){try{var AC=window.AudioContext||window.webkitAudioContext;if(AC&&!ctx){ctx=new AC();loadClicks()}}catch(e){}})();  /* start decoding the samples at page load; resume() still waits for a gesture */
 function click(){
   if(muted||!ctx)return;
   if(ctx.state==='running'){play();return}
