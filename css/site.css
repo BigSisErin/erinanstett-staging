@@ -1081,3 +1081,6 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .homepage #choose.open .sleeves{display:none!important}
 
 .vhs canvas{filter:none!important;image-rendering:pixelated}
+
+.vhs{height:clamp(170px,19vw,280px)}
+.homepage .block.about{padding-top:calc(clamp(170px,19vw,280px) * .78 + clamp(20px,4vw,60px))!important}
