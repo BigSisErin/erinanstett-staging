@@ -1084,3 +1084,9 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 
 .vhs{height:clamp(170px,19vw,280px)}
 .homepage .block.about{padding-top:calc(clamp(170px,19vw,280px) * .78 + clamp(20px,4vw,60px))!important}
+
+/* transition + brands strip removed for now: wood meets About cleanly */
+.homepage #choose::after{display:none!important}
+.homepage #choose{padding-bottom:clamp(72px,10vw,150px)!important}
+.homepage #choose.open{padding-bottom:clamp(72px,10vw,150px)!important}
+.homepage .block.about{padding-top:clamp(56px,8vw,110px)!important}
