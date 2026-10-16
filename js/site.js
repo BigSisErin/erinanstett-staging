@@ -300,7 +300,7 @@ function Table(surface){
   });
   var seed=parseInt(surface.dataset.seed||'7',10),tidy=false,live=false;
   function layout(){
-    var mh=+surface.dataset.minh||innerHeight,W=surface.clientWidth,d=Math.min(W<520?244:W<900?328:408,+surface.dataset.dmax||999),pad=Math.max(14,d*0.14),n=lis.length;
+    var mh=+surface.dataset.minh||innerHeight,W=surface.clientWidth,d=Math.min(W<520?244:W<900?328:408,+surface.dataset.dmax||999,(surface.closest('.spill')&&W>=700&&surface.parentNode.querySelector('.topsleeve'))?Math.round(W*.3):999),pad=Math.max(14,d*0.14),n=lis.length;
     surface.style.setProperty('--d',d+'px');
     var tagH=14,rnd=mulberry(seed),placed=[],H,ds=$('.dropsleeve',surface),dsz=d*1.05,dp=null;var th=surface.parentNode.querySelector('.tophead'),top=th?th.offsetTop+th.offsetHeight+14:0;var tsl=surface.parentNode.querySelector('.topsleeve'),tsr=null;if(tsl){var sr=surface.getBoundingClientRect(),tr=tsl.getBoundingClientRect();tsr={l:tr.left-sr.left,r:tr.right-sr.left,t:tr.top-sr.top,b:tr.bottom-sr.top};if(W<700)top=Math.max(top,tsr.b+8);else top=Math.max(top,+surface.dataset.top||100);}
     if(tidy){
@@ -334,7 +334,9 @@ function Table(surface){
           if(sp){ /* drawer: wheels may rest on the sleeve but never on each other; spread them as far apart as the room allows */
             var m=1e9;placed.forEach(function(p){m=Math.min(m,Math.hypot(p.cx-cx,p.cy-cy))});
             s=Math.min(m,d*1.15);if(m<d*1.02)s-=1000+(d*1.02-m);
-            if(tsr&&W>=700){var ox=Math.max(0,Math.min(cx+d/2,tsr.r)-Math.max(cx-d/2,tsr.l)),oy=Math.max(0,Math.min(cy+d/2,tsr.b)-Math.max(cy-d/2,tsr.t));s-=ox*oy/(d*d)*90}
+            if(tsr&&W>=700){ /* keep clear of the open sleeve; only its bottom edge may be touched, and only a little */
+              var fb=tsr.b-d*.2,qx=Math.max(tsr.l,Math.min(cx,tsr.r)),qy=Math.max(tsr.t,Math.min(cy,fb)),dd=Math.hypot(cx-qx,cy-qy);
+              if(dd<d/2)s-=(d/2-dd)/d*2400}
             if(hit)s-=300;
           }
           if(s>bestScore){bestScore=s;best={cx:cx,cy:cy,tdx:tdx,rect:rect,rot:(rnd()-.5)*34,trot:(rnd()-.5)*8}}

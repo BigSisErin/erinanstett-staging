@@ -1142,3 +1142,21 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
   .frame.note picture .nbg{display:block;width:100%;height:100%;object-fit:cover;object-position:60% 50%}
   .frame.note .nscrim{display:block;position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,14,30,.7) 0%,rgba(8,14,30,.5) 40%,rgba(8,14,30,.14) 72%,rgba(8,14,30,.06) 100%)}
 }
+.plain.legal{max-width:44rem}
+.plain.legal h2{font-size:1.3rem;margin:1.8rem 0 .4rem}
+.plain.legal p{line-height:1.6;margin:0 0 .6rem;max-width:62ch}
+.plain.legal .upd{font-family:var(--ff-display);text-transform:uppercase;letter-spacing:.14em;font-size:.8rem;opacity:.7}
+.plain.legal a{text-decoration:underline;text-underline-offset:3px}
+.plain.legal code{font-size:.9em}
+.plain.nf{display:grid;justify-items:start;gap:.2rem;padding-block:clamp(32px,8vw,96px)}
+.nf .nfw{width:clamp(120px,22vw,220px);height:auto;margin-bottom:1rem;animation:nfspin 18s linear infinite}
+.nf .kick{font-family:var(--ff-display);text-transform:uppercase;letter-spacing:.3em;font-size:.8rem;margin:0}
+.nf h1{margin:0 0 .6rem}
+.nf p{max-width:36rem;line-height:1.55}
+.nf .nfl{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;margin-top:1rem}
+.nf .nfl a{font-family:var(--ff-display);font-stretch:62%;text-transform:uppercase;letter-spacing:.09em;font-size:1.1rem;text-decoration:none;border-bottom:2px solid var(--ink);padding-bottom:2px}
+.nf .nfl a:hover{color:var(--flame);border-color:var(--flame)}
+@keyframes nfspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.nf .nfw{animation:none}}
+.foot .legalnav a{text-decoration:underline;text-underline-offset:3px}
+.nf .nfw{filter:brightness(.14) drop-shadow(0 0 0 #000)}
