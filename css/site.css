@@ -1052,3 +1052,11 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 /* stacked sleeves keep their wheels: inner sleeve-w fills the link, link carries the dim */
 .spill-others a .sleeve-w{width:100%!important;filter:none!important;transform:none!important}
 .spill-others a .sleeve-w .peek{translate:0 0!important}
+/* looser, lower, second sleeve bleeds off the right edge */
+.homepage #choose{overflow-x:clip}
+.spill-others{padding-top:96px!important;min-height:calc(var(--slv) + 130px)!important}
+.spill-others a:nth-child(1){transform:rotate(-9deg) translate(-14px,6px)!important}
+.spill-others a:nth-child(2){--bx:clamp(70px,9vw,150px);transform:rotate(6.5deg) translate(var(--bx),46px)!important;margin-left:calc(var(--slv) * -.46)!important}
+.spill-others a:nth-child(1):hover,.spill-others a:nth-child(1):focus-visible{transform:rotate(-7deg) translate(-14px,-6px)!important}
+.spill-others a:nth-child(2):hover,.spill-others a:nth-child(2):focus-visible{transform:rotate(5deg) translate(var(--bx),32px)!important}
+@media (max-width:900px){.spill-others a:nth-child(2){--bx:clamp(20px,6vw,50px)}}
