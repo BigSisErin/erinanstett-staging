@@ -1035,3 +1035,12 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .spill-others a:nth-child(2){margin-left:calc(var(--slv) * -.52)}
 .spill-others{justify-content:flex-end;padding-top:34px;min-height:calc(var(--slv) + 60px)}
 @media (max-width:900px){.spill-grid{grid-template-columns:1fr}.spill-others a:nth-child(2){margin-left:calc(var(--slv) * -.35)}}
+
+/* v3: no tracking above the logos, soft fade to black; short tracking strip out of the logos */
+.vhs-a{display:none}
+.homepage #choose{position:relative}
+.homepage #choose::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:clamp(110px,12vw,170px);background:linear-gradient(to bottom,rgba(11,8,7,0),#0b0807);pointer-events:none;z-index:0}
+.homepage #choose{padding-bottom:calc(120px + clamp(0px,2vw,24px))!important}
+.homepage #choose.open{padding-bottom:calc(150px + clamp(0px,2vw,24px))!important}
+.vhs{height:clamp(44px,5vw,72px)}
+.homepage .block.about{padding-top:calc(clamp(44px,5vw,72px) + clamp(20px,4vw,60px))!important}
