@@ -928,9 +928,9 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .homepage .sleeve-w{rotate:0deg}
 .homepage #choose{background:linear-gradient(#090706,rgba(9,7,6,0) 24%),linear-gradient(rgba(10,6,3,.5),rgba(10,6,3,.5)),#a4602f url(../img/ui/wood-teak.webp) center/cover no-repeat!important}
 .homepage .worked{background:#0b0807}
-.homepage .sleeve-w{filter:brightness(.3) saturate(.55)!important;transition:filter .6s ease,transform .4s cubic-bezier(.3,.7,.2,1)}
+.homepage .sleeve-w{filter:brightness(.62) saturate(.8)!important;transition:filter .6s ease,transform .4s cubic-bezier(.3,.7,.2,1)}
 .homepage .sleeve-w:nth-child(2){transition-delay:.1s}.homepage .sleeve-w:nth-child(3){transition-delay:.2s}
-.homepage #choose.lit .sleeve-w{filter:brightness(.58) saturate(.75)!important}
+.homepage #choose.lit .sleeve-w{filter:brightness(.84) saturate(.92)!important}
 .homepage .sleeve-w:hover,.homepage .sleeve-w:focus-within,.homepage #choose.lit .sleeve-w:hover{filter:brightness(1) saturate(1) drop-shadow(0 2px 2px rgba(0,0,0,.7)) drop-shadow(0 20px 18px rgba(0,0,0,.55))!important;transition-delay:0s}
 @media (prefers-reduced-motion:reduce){.homepage .sleeve-w{transition:none}}
 .homepage .sleeve-w:nth-child(1){rotate:-1.6deg}.homepage .sleeve-w:nth-child(2){rotate:.9deg}.homepage .sleeve-w:nth-child(3){rotate:-.7deg}
