@@ -906,7 +906,7 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .homepage #choose{padding-block:clamp(72px,10vw,150px)!important;box-shadow:none!important}
 .homepage .worked{box-shadow:none!important}
 .homepage .sleeve-w{rotate:0deg}
-.homepage #choose{background:linear-gradient(#090706,rgba(9,7,6,0) 24%,rgba(9,7,6,0) 76%,#0b0807),linear-gradient(rgba(10,6,3,.5),rgba(10,6,3,.5)),#a4602f url(../img/ui/wood-teak.webp) center/cover no-repeat!important}
+.homepage #choose{background:linear-gradient(#090706,rgba(9,7,6,0) 24%),linear-gradient(rgba(10,6,3,.5),rgba(10,6,3,.5)),#a4602f url(../img/ui/wood-teak.webp) center/cover no-repeat!important}
 .homepage .worked{background:#0b0807}
 .homepage .sleeve-w{filter:brightness(.3) saturate(.55)!important;transition:filter .6s ease,transform .4s cubic-bezier(.3,.7,.2,1)}
 .homepage .sleeve-w:nth-child(2){transition-delay:.1s}.homepage .sleeve-w:nth-child(3){transition-delay:.2s}
@@ -916,7 +916,7 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .homepage .sleeve-w:nth-child(1){rotate:-1.6deg}.homepage .sleeve-w:nth-child(2){rotate:.9deg}.homepage .sleeve-w:nth-child(3){rotate:-.7deg}
 
 /* ===== About: collapsed list, index-style ===== */
-.homepage .block.about{background:linear-gradient(#0b0807 0,#1f3a38 clamp(50px,6vw,90px),#e9efe8 clamp(180px,19vw,270px))!important;color:#2b2f33;padding:clamp(170px,22vw,310px) 0 clamp(56px,8vw,120px);position:relative;z-index:2}
+.homepage .block.about{background:#e9efe8!important;color:#2b2f33;padding:calc(168px + clamp(28px,5vw,72px)) 0 clamp(56px,8vw,120px);position:relative;z-index:2}
 .homepage .about .abouttrim{display:none}
 .ab{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:0 clamp(32px,6vw,88px);align-items:start;max-width:1040px;margin:0 auto}
 .abl{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding-right:clamp(20px,4vw,56px);border-right:1px solid #8a968d;min-height:100%}
@@ -996,3 +996,11 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 
 /* nav stays see-through over the wood */
 .homepage .bar.onwood{background:linear-gradient(to bottom,rgba(13,10,8,.4),rgba(13,10,8,0))!important;text-shadow:0 1px 2px rgba(0,0,0,.7)}
+
+/* pixel-dither seams between sections (replaces the soft gradients) */
+.homepage #choose{position:relative}
+.homepage #choose>.wrap{position:relative;z-index:1}
+.homepage #choose::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:168px;background:#0b0807;-webkit-mask:url(../img/ui/dither.png) left top/1536px 168px repeat-x;mask:url(../img/ui/dither.png) left top/1536px 168px repeat-x;pointer-events:none;z-index:0}
+.homepage #choose{padding-bottom:calc(168px + clamp(0px,2vw,24px))!important}
+.homepage .block.about::before{content:"";position:absolute;left:0;right:0;top:-1px;height:168px;background:#0b0807;transform:scaleY(-1);-webkit-mask:url(../img/ui/dither.png) left top/1536px 168px repeat-x;mask:url(../img/ui/dither.png) left top/1536px 168px repeat-x;pointer-events:none}
+.homepage .worked{margin-top:-2px}
