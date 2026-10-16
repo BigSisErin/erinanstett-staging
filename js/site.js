@@ -137,32 +137,35 @@ function Reel(stage){
 }
 
 /* ---------- Vimeo frames: mounted only while active ---------- */
+var VS={on:false};  /* video sound opted in on this page (one project = one page) */
 function mountYT(f,box){
   var id=f.dataset.yt,snd=$('.vsound',box);
   var fr=document.createElement('iframe');
-  fr.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay='+(RM?0:1)+'&mute=1&controls='+(RM?1:0)+'&loop=1&playlist='+id+'&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&origin='+encodeURIComponent(location.origin);
+  fr.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay='+(RM?0:1)+'&mute=1&controls='+(RM?1:0)+(f.dataset.noloop?'':'&loop=1&playlist='+id)+'&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&origin='+encodeURIComponent(location.origin);
   fr.allow='autoplay; fullscreen; picture-in-picture';fr.setAttribute('title',f.dataset.title||'Video');
   box.insertBefore(fr,box.firstChild);
   function cmd(fn,args){try{fr.contentWindow.postMessage(JSON.stringify({event:'command',func:fn,args:args||[]}),'*')}catch(e){}}
   fr.addEventListener('load',function(){
     var wt=$('.vwait',box);if(wt)wt.remove();
     if(snd){snd.disabled=false;snd.setAttribute('aria-pressed','false');
-      snd.onclick=function(e){e.stopPropagation();var on=snd.getAttribute('aria-pressed')==='false';
+      if(VS.on&&!RM){cmd('unMute');cmd('setVolume',[100]);cmd('playVideo');snd.setAttribute('aria-pressed','true');snd.setAttribute('aria-label','Video sound on. Turn off')}
+      snd.onclick=function(e){e.stopPropagation();var on=snd.getAttribute('aria-pressed')==='false';VS.on=on;
         if(on){cmd('unMute');cmd('setVolume',[100]);cmd('playVideo')}else cmd('mute');
         snd.setAttribute('aria-pressed',on?'true':'false');snd.setAttribute('aria-label',on?'Video sound on. Turn off':'Video sound off. Turn on')}}
   });
   setTimeout(function(){var w=$('.vwait',box);if(w)w.remove()},5000);
 }
 function mountMP4(f,box){
-  var v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.setAttribute('muted','');
+  var v=document.createElement('video');v.muted=!VS.on;v.loop=!f.dataset.noloop;v.playsInline=true;v.setAttribute('playsinline','');if(!VS.on)v.setAttribute('muted','');
   v.preload='auto';if(f.dataset.poster)v.poster=f.dataset.poster;v.setAttribute('aria-label',f.dataset.title||'Video');
   v.src=f.dataset.mp4;box.insertBefore(v,box.firstChild);f._v=v;
   var snd=$('.vsound',box);
   v.addEventListener('loadeddata',function(){var w=$('.vwait',box);if(w)w.remove()});
-  if(snd){snd.disabled=false;snd.setAttribute('aria-pressed','false');
-    snd.onclick=function(e){e.stopPropagation();var on=snd.getAttribute('aria-pressed')==='false';v.muted=!on;if(on)v.play().catch(function(){});
+  function lab(on){if(!snd)return;snd.setAttribute('aria-pressed',on?'true':'false');snd.setAttribute('aria-label',on?'Video sound on. Turn off':'Video sound off. Turn on')}
+  if(snd){snd.disabled=false;lab(VS.on&&!RM);
+    snd.onclick=function(e){e.stopPropagation();var on=snd.getAttribute('aria-pressed')==='false';VS.on=on;v.muted=!on;if(on)v.play().catch(function(){});
       snd.setAttribute('aria-pressed',on?'true':'false');snd.setAttribute('aria-label',on?'Video sound on. Turn off':'Video sound off. Turn on')}}
-  if(!RM)v.play().catch(function(){});else v.controls=true;
+  if(!RM)v.play().catch(function(){if(!v.muted){v.muted=true;lab(false);v.play().catch(function(){})}});else v.controls=true;
   setTimeout(function(){var w=$('.vwait',box);if(w)w.remove()},4000);
 }
 function mountVideo(f){
@@ -170,11 +173,11 @@ function mountVideo(f){
   if(f.dataset.yt){mountYT(f,box);return}
   if(f.dataset.mp4){mountMP4(f,box);return}
   var id=f.dataset.vimeo,h=f.dataset.vh;
-  function url(m){return 'https://player.vimeo.com/video/'+id+'?title=0&byline=0&portrait=0&playsinline=1&dnt=1&loop=1&muted='+(m?1:0)+'&autoplay='+(RM?0:1)+'&controls='+(RM?1:0)+(h?'&h='+h:'')+(f.dataset.vs?'#t='+f.dataset.vs+'s':'')}
+  function url(m){return 'https://player.vimeo.com/video/'+id+'?title=0&byline=0&portrait=0&playsinline=1&dnt=1&loop='+(f.dataset.noloop?0:1)+'&muted='+(m?1:0)+'&autoplay='+(RM?0:1)+'&controls='+(RM?1:0)+(h?'&h='+h:'')+(f.dataset.vs?'#t='+f.dataset.vs+'s':'')}
   var fr=document.createElement('iframe');
-  fr.src=url(true);fr.allow='autoplay; fullscreen; picture-in-picture';fr.setAttribute('title',f.dataset.title||'Video');fr.setAttribute('loading','lazy');
+  fr.src=url(!VS.on);fr.allow='autoplay; fullscreen; picture-in-picture';fr.setAttribute('title',f.dataset.title||'Video');fr.setAttribute('loading','lazy');
   box.insertBefore(fr,box.firstChild);
-  var snd=$('.vsound',box),soundOn=false;
+  var snd=$('.vsound',box),soundOn=!!VS.on&&!RM;
   function setLabel(on){if(!snd)return;snd.setAttribute('aria-pressed',on?'true':'false');snd.setAttribute('aria-label',on?'Video sound on. Turn off':'Video sound off. Turn on')}
   function player(){
     if(f._p)return f._p;
@@ -185,9 +188,12 @@ function mountVideo(f){
   function ready(){
     var wait=$('.vwait',box);if(wait)wait.remove();
     if(!snd||!snd.disabled)return;
-    snd.disabled=false;setLabel(false);
+    snd.disabled=false;setLabel(soundOn);
+    if(soundOn){ /* carried over from an earlier video: if the browser blocked sound, fall back to muted play */
+      setTimeout(function(){var q=player();if(!q||!soundOn)return;
+        Promise.all([q.getMuted(),q.getPaused()]).then(function(r){if(!soundOn||!(r[0]||r[1]))return;soundOn=false;setLabel(false);try{f._p&&f._p.destroy()}catch(e){}f._p=null;fr.src=url(true)}).catch(function(){})},1800)}
     snd.onclick=function(e){
-      e.stopPropagation();soundOn=!soundOn;setLabel(soundOn);var p=player();
+      e.stopPropagation();soundOn=!soundOn;VS.on=soundOn;setLabel(soundOn);var p=player();
       if(!soundOn){if(p)p.setMuted(true).catch(function(){});return}
       if(p){p.setMuted(false).catch(function(){});p.setVolume(1).catch(function(){});p.play().catch(function(){})}
       /* if the browser kept the player muted (autoplay rules), reload it unmuted inside this tap */
