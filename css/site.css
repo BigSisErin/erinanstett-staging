@@ -1130,3 +1130,7 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 /* open sleeve: lighter than the sleeves below it, and clicking it closes the drawer */
 .spill .topsleeve{filter:brightness(.8) saturate(.9) drop-shadow(0 6px 8px rgba(0,0,0,.5))!important;pointer-events:auto;cursor:pointer;transition:filter .3s ease}
 .spill .topsleeve:hover{filter:brightness(1) saturate(1) drop-shadow(0 10px 12px rgba(0,0,0,.55))!important}
+
+/* video frames borrow the next still's blurred backdrop on desktop only */
+.frame.video .vamb{display:none}
+@media (min-width:701px){.frame.video .vamb{display:block;opacity:.6}}
