@@ -878,3 +878,4 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .tlist a span{font-size:.82rem;opacity:.6;text-align:right}
 .tlist a:hover b{color:#fff;text-decoration:underline;text-underline-offset:4px}
 @media (max-width:520px){.tlist a{flex-direction:column;gap:2px}.tlist a span{text-align:left}}
+@media (max-width:700px){.frame.note .nbox{padding-top:68px;padding-bottom:44px}.frame.note .nbox p:not(.kicker){font-size:.95rem;line-height:1.5}}
