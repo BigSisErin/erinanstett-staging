@@ -1112,3 +1112,5 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .viewlbl{position:absolute;z-index:3;top:clamp(76px,6.5vw,94px);left:clamp(16px,3.4vw,48px);margin:0;font:600 .68rem/1 var(--ff-body,system-ui);letter-spacing:.24em;text-transform:uppercase;color:rgba(244,236,214,.78);text-shadow:0 1px 2px rgba(0,0,0,.7)}
 .homepage #choose.open .viewlbl{display:none}
 .viewlbl{left:0!important;right:0;text-align:center;color:rgba(226,196,156,.5)!important;text-shadow:0 1px 2px rgba(0,0,0,.45)!important}
+.acc h2.ih{margin:0;font:inherit}
+.acc .row .pn .in .lede,.acc .pn .in>p{max-width:46ch}
