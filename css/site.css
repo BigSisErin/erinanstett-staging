@@ -1060,3 +1060,6 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .spill-others a:nth-child(1):hover,.spill-others a:nth-child(1):focus-visible{transform:rotate(-7deg) translate(-14px,-6px)!important}
 .spill-others a:nth-child(2):hover,.spill-others a:nth-child(2):focus-visible{transform:rotate(5deg) translate(var(--bx),32px)!important}
 @media (max-width:900px){.spill-others a:nth-child(2){--bx:clamp(20px,6vw,50px)}}
+/* stacked sleeves dim like the lit landing sleeves, no shadow at rest */
+.spill-others a{filter:brightness(.58) saturate(.75)!important}
+.spill-others a:hover,.spill-others a:focus-visible{filter:brightness(1) saturate(1) drop-shadow(0 2px 2px rgba(0,0,0,.7)) drop-shadow(0 20px 18px rgba(0,0,0,.55))!important}
