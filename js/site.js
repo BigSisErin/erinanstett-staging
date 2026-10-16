@@ -526,11 +526,15 @@ document.addEventListener('DOMContentLoaded',function(){
     function set(v){v=Math.max(0,Math.min(100,v));c.style.setProperty('--p',v+'%');inp.value=Math.round(v)}
     function fromX(x){rect=rect||c.getBoundingClientRect();set((x-rect.left)/rect.width*100)}
     function touched(){c.classList.add('touched')}
-    c.addEventListener('pointerdown',function(e){e.stopPropagation();if(e.pointerType==='mouse'&&e.button!==0)return;
+    /* touch and pen: only the handle area drags the divider, so a swipe anywhere else still moves the reel */
+    function nearBar(x){var r=c.getBoundingClientRect(),bx=r.left+r.width*(parseFloat(getComputedStyle(c).getPropertyValue('--p'))||50)/100;return Math.abs(x-bx)<=32}
+    c.addEventListener('pointerdown',function(e){
+      if(e.pointerType==='mouse'){if(e.button!==0)return}else if(!nearBar(e.clientX))return;
+      e.stopPropagation();
       touched();drag=1;rect=c.getBoundingClientRect();try{c.setPointerCapture(e.pointerId)}catch(_){}fromX(e.clientX)});
     c.addEventListener('pointermove',function(e){if(drag)fromX(e.clientX)});
-    ['pointerup','pointercancel'].forEach(function(t){c.addEventListener(t,function(e){e.stopPropagation();drag=0;rect=null;try{c.releasePointerCapture(e.pointerId)}catch(_){}})});
-    c.addEventListener('touchstart',function(e){e.stopPropagation()},{passive:true});
+    ['pointerup','pointercancel'].forEach(function(t){c.addEventListener(t,function(e){if(drag)e.stopPropagation();drag=0;rect=null;try{c.releasePointerCapture(e.pointerId)}catch(_){}})});
+    c.addEventListener('touchstart',function(e){var t=e.touches[0];if(t&&nearBar(t.clientX))e.stopPropagation()},{passive:true});
     c.addEventListener('click',function(e){e.stopPropagation()});
     inp.addEventListener('input',function(){touched();c.style.setProperty('--p',inp.value+'%')});
     inp.addEventListener('keydown',function(e){e.stopPropagation()});

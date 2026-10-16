@@ -696,7 +696,7 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 
 /* before/after slider */
 @property --p{syntax:'<percentage>';inherits:true;initial-value:50%}
-.reel-page .frame .main .cmp{position:relative;--p:50%;aspect-ratio:var(--ar);width:min(100%,calc((100svh - var(--fi-t,76px) - var(--fi-b,70px) - 10px)*var(--arn)));max-height:100%;overflow:hidden;touch-action:pan-y;cursor:ew-resize;box-shadow:0 14px 34px rgba(0,0,0,.5);user-select:none;-webkit-user-select:none}
+.reel-page .frame .main .cmp{position:relative;--p:50%;aspect-ratio:var(--ar);width:min(100%,calc((100svh - var(--fi-t,76px) - var(--fi-b,70px) - 10px)*var(--arn)));max-height:100%;overflow:hidden;touch-action:none;cursor:ew-resize;box-shadow:0 14px 34px rgba(0,0,0,.5);user-select:none;-webkit-user-select:none}
 .reel-page .frame .main .cmp picture{display:block;position:absolute;inset:0}
 .reel-page .frame .main .cmp img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;filter:none;-webkit-user-drag:none;pointer-events:none}
 .cmp .bf{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--p)) 0 0)}
