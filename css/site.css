@@ -850,3 +850,9 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 /* hamburger: tighter bars, and gone once the full nav is showing */
 .burger{align-content:center}.burger span{margin:2px 0}
 @media (min-width:900px){.burger{display:none!important}}
+/* back pocket page label (stands in for the sleeve) */
+.topsleeve.pocketlabel{height:auto;aspect-ratio:auto;display:flex;flex-direction:column;gap:6px;padding:20px 22px 18px;background:#f7f0dd;color:#2f6a64;border:2px dashed rgba(47,106,100,.55);outline:6px solid #f7f0dd;transform:rotate(-4deg);width:clamp(190px,20vw,270px);box-shadow:0 8px 14px rgba(30,12,3,.35)}
+.topsleeve.pocketlabel b{font-family:var(--ff-display);font-weight:700;font-stretch:62%;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(2rem,3.4vw,2.9rem);line-height:.95}
+.topsleeve.pocketlabel span{font-family:var(--ff-display);font-weight:600;font-stretch:75%;text-transform:uppercase;letter-spacing:.2em;font-size:.72rem}
+.topsleeve.pocketlabel::before{content:"";position:absolute;left:50%;top:-16px;width:86px;height:26px;transform:translateX(-50%) rotate(3deg);background:rgba(233,201,122,.85)}
+@media (max-width:700px){.topsleeve.pocketlabel{width:min(52vw,230px);margin:6px 0 0 6px}}
