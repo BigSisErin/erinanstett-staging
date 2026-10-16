@@ -717,7 +717,7 @@ function snd(ms){
     if(use&&use.duration>len*rate+0.3){ns.buffer=use;ns.playbackRate.value=rate;ns.__off=0.05+Math.random()*(use.duration-len*rate-0.15)}
     else{ns.buffer=noiseBuf(c,Math.min(1.2,len));ns.__off=0}
     var sg=c.createGain();sg.gain.setValueAtTime(0.0001,s0);
-    var top=ns.__off?0.55:0.2;
+    var top=ns.__off?0.27:0.1;
     sg.gain.linearRampToValueAtTime(top,s0+sd*0.16);
     sg.gain.linearRampToValueAtTime(top*0.75,s0+sd*0.6);
     sg.gain.linearRampToValueAtTime(0.0001,s0+sd);
