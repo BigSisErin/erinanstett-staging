@@ -1025,8 +1025,8 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .vhs-b{top:-1px;background:#0b0807}
 .homepage #choose.open{padding-bottom:calc(clamp(120px,14vw,200px) + 24px)!important}
 /* one sleeve size everywhere: idle, selected, empty, stacked */
-:root{--slv:clamp(220px,21vw,300px)}
-@media (max-width:700px){:root{--slv:min(62vw,250px)}}
+:root{--slv:clamp(253px,24.2vw,345px)}
+@media (max-width:700px){:root{--slv:min(71vw,288px)}}
 .homepage .sleeve-w{width:var(--slv)}
 .spillhead{width:var(--slv)!important}
 .spill .topsleeve{width:100%!important}
@@ -1063,3 +1063,8 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 /* stacked sleeves dim like the lit landing sleeves, no shadow at rest */
 .spill-others a{filter:brightness(.58) saturate(.75)!important}
 .spill-others a:hover,.spill-others a:focus-visible{filter:brightness(1) saturate(1) drop-shadow(0 2px 2px rgba(0,0,0,.7)) drop-shadow(0 20px 18px rgba(0,0,0,.55))!important}
+
+/* +15% sleeves everywhere */
+.sleeve-w{width:min(100%,391px)}
+.homepage .sleeve-w{width:var(--slv)}
+.spill-others a .sleeve-w{width:100%!important}

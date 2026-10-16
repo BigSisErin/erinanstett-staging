@@ -269,7 +269,7 @@ function Table(surface){
   });
   var seed=parseInt(surface.dataset.seed||'7',10),tidy=false,live=false;
   function layout(){
-    var mh=+surface.dataset.minh||innerHeight,W=surface.clientWidth,d=Math.min(W<520?180:W<900?240:300,+surface.dataset.dmax||999),pad=Math.max(14,d*0.14),n=lis.length;
+    var mh=+surface.dataset.minh||innerHeight,W=surface.clientWidth,d=Math.min(W<520?207:W<900?276:345,+surface.dataset.dmax||999),pad=Math.max(14,d*0.14),n=lis.length;
     surface.style.setProperty('--d',d+'px');
     var tagH=14,rnd=mulberry(seed),placed=[],H,ds=$('.dropsleeve',surface),dsz=d*1.05,dp=null;var th=surface.parentNode.querySelector('.tophead'),top=th?th.offsetTop+th.offsetHeight+14:0;var tsl=surface.parentNode.querySelector('.topsleeve'),tsr=null;if(tsl){var sr=surface.getBoundingClientRect(),tr=tsl.getBoundingClientRect();tsr={l:tr.left-sr.left,r:tr.right-sr.left,t:tr.top-sr.top,b:tr.bottom-sr.top};if(W<700)top=Math.max(top,tsr.b+8);else top=Math.max(top,+surface.dataset.top||100);}
     if(tidy){
