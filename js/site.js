@@ -300,7 +300,7 @@ function Table(surface){
   });
   var seed=parseInt(surface.dataset.seed||'7',10),tidy=false,live=false;
   function layout(){
-    var mh=+surface.dataset.minh||innerHeight,W=surface.clientWidth,d=Math.min(W<520?244:W<900?328:408,+surface.dataset.dmax||999,(surface.closest('.spill')&&W>=700&&surface.parentNode.querySelector('.topsleeve'))?Math.round(W*.3):999),pad=Math.max(14,d*0.14),n=lis.length;
+    var mh=+surface.dataset.minh||innerHeight,W=surface.clientWidth,d=Math.min(W<520?244:W<900?328:408,+surface.dataset.dmax||999,(surface.closest('.spill')&&W>=700&&surface.parentNode.querySelector('.topsleeve'))?Math.round(surface.parentNode.querySelector('.topsleeve').getBoundingClientRect().width*.55):999),pad=Math.max(14,d*0.14),n=lis.length;
     surface.style.setProperty('--d',d+'px');
     var tagH=14,rnd=mulberry(seed),placed=[],H,ds=$('.dropsleeve',surface),dsz=d*1.05,dp=null;var th=surface.parentNode.querySelector('.tophead'),top=th?th.offsetTop+th.offsetHeight+14:0;var tsl=surface.parentNode.querySelector('.topsleeve'),tsr=null;if(tsl){var sr=surface.getBoundingClientRect(),tr=tsl.getBoundingClientRect();tsr={l:tr.left-sr.left,r:tr.right-sr.left,t:tr.top-sr.top,b:tr.bottom-sr.top};if(W<700)top=Math.max(top,tsr.b+8);else top=Math.max(top,+surface.dataset.top||100);}
     if(tidy){
@@ -310,7 +310,7 @@ function Table(surface){
       dp={cx:x0+d/2,cy:top+pad+d/2,rot:0};
       lis.forEach(function(li,i){var k=i+o1,c=k%cols,r=Math.floor(k/cols);placed.push({cx:x0+c*(d+gap)+d/2,cy:top+pad+r*rowH+d/2,rot:0,trot:0,tdx:0})});
     }else{
-      var area=n*Math.pow(d+tagH+70,2)*1.2;H=Math.max(mh,top+Math.ceil(area/Math.max(W,1)));
+      var area=n*Math.pow(d+tagH+70,2)*1.2;if(tsr&&surface.closest('.spill')&&W>=700)area=n*Math.pow(d*1.08+tagH,2)*1.5+(tsr.r-tsr.l)*(tsr.b-tsr.t)*.8;H=Math.max(mh,top+Math.ceil(area/Math.max(W,1)));
       var minX=d/2+pad*.5,maxX=W-d/2-pad*.5,minY=top+d/2+pad*.3,maxY=H-d/2-tagH-pad*.6;
       dp={cx:W-dsz*.18,cy:top+(H-top)*.58,rot:14};placed.push(tsl?{cx:-9999,cy:-9999,tdx:0,rect:{l:-9999,r:-9998,t:-9999,b:-9998}}:{cx:dp.cx,cy:dp.cy,tdx:0,rect:{l:dp.cx-dsz/2,r:dp.cx+dsz/2,t:dp.cy-dsz/2,b:dp.cy+dsz/2}});
       var base=placed.length;
