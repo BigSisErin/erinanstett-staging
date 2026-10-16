@@ -993,3 +993,6 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .spillhead{width:clamp(200px,20vw,290px);left:8px;top:14px}
 .spill .topsleeve{left:0;top:0;width:100%;max-width:none}
 @media (max-width:700px){.spillhead{width:min(46vw,200px);left:4px;top:6px}.spill .topsleeve{position:relative;width:100%}}
+
+/* nav stays see-through over the wood */
+.homepage .bar.onwood{background:linear-gradient(to bottom,rgba(13,10,8,.4),rgba(13,10,8,0))!important;text-shadow:0 1px 2px rgba(0,0,0,.7)}

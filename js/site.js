@@ -509,7 +509,7 @@ function TV(tv){
 
 /* home: nav floats over the wood, turns solid once past the TV */
 (function(){var bar=$('.homepage .bar'),sec=$('.tvsec');if(!bar||!sec)return;
-  function f(){bar.classList.toggle('solid',sec.getBoundingClientRect().bottom<bar.offsetHeight+10)}
+  function f(){var h=bar.offsetHeight,ch=$('#choose'),w=false;if(ch){var r=ch.getBoundingClientRect();w=r.top<h&&r.bottom>h+4}bar.classList.toggle('onwood',w);bar.classList.toggle('solid',!w&&sec.getBoundingClientRect().bottom<h+10)}
   addEventListener('scroll',f,{passive:true});addEventListener('resize',f);f()})();
 document.addEventListener('DOMContentLoaded',function(){
   $$('[data-guide]').forEach(Manual);
