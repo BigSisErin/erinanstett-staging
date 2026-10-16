@@ -1134,3 +1134,11 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 /* video frames borrow the next still's blurred backdrop on desktop only */
 .frame.video .vamb{display:none}
 @media (min-width:701px){.frame.video .vamb{display:block;opacity:.6}}
+
+/* note slide with a full-bleed photo behind it (desktop); phones keep the soft blur and get the photo as its own slide */
+.frame.note picture,.frame.note .nscrim{display:none}
+@media (min-width:701px){
+  .frame.note picture{display:block;position:absolute;inset:0 -18% 0 18%;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 24%);mask-image:linear-gradient(90deg,transparent 0,#000 24%)}
+  .frame.note picture .nbg{display:block;width:100%;height:100%;object-fit:cover;object-position:60% 50%}
+  .frame.note .nscrim{display:block;position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,14,30,.7) 0%,rgba(8,14,30,.5) 40%,rgba(8,14,30,.14) 72%,rgba(8,14,30,.06) 100%)}
+}
