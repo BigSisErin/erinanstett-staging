@@ -311,7 +311,7 @@ function Table(surface){
       lis.forEach(function(li,i){var k=i+o1,c=k%cols,r=Math.floor(k/cols);placed.push({cx:x0+c*(d+gap)+d/2,cy:top+pad+r*rowH+d/2,rot:0,trot:0,tdx:0})});
     }else{
       var area=n*Math.pow(d+tagH+70,2)*1.2;if(tsr&&surface.closest('.spill')&&W>=700)area=n*Math.pow(d*1.1+tagH,2)*1.45+(tsr.r-tsr.l)*(tsr.b-tsr.t)*.8;H=Math.max(mh,top+Math.ceil(area/Math.max(W,1)));
-      var minX=d/2+pad*.5,maxX=W-d/2-pad*.5,minY=top+d/2+pad*.3,maxY=H-d/2-tagH-pad*.6;
+      var minX=d/2+pad*.5,maxX=W-d/2-pad*.5,minY=top+d/2+pad*.3,maxY=H-d/2-tagH-pad*.6;if(tsr&&surface.closest('.spill')&&W>=700)maxY=Math.min(maxY,Math.max(minY+d,tsr.b+d*(n>3?1.95:1.3)));
       dp={cx:W-dsz*.18,cy:top+(H-top)*.58,rot:14};placed.push(tsl?{cx:-9999,cy:-9999,tdx:0,rect:{l:-9999,r:-9998,t:-9999,b:-9998}}:{cx:dp.cx,cy:dp.cy,tdx:0,rect:{l:dp.cx-dsz/2,r:dp.cx+dsz/2,t:dp.cy-dsz/2,b:dp.cy+dsz/2}});
       var base=placed.length;
       lis.forEach(function(li,i){
