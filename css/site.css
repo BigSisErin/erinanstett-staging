@@ -1117,3 +1117,12 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .viewlbl{left:0!important;right:0;text-align:center;color:rgba(226,196,156,.5)!important;text-shadow:0 1px 2px rgba(0,0,0,.45)!important}
 .acc h2.ih{margin:0;font:inherit}
 .acc .row .pn .in .lede,.acc .pn .in>p{max-width:46ch}
+
+/* spill: the two other sleeves match the open sleeve's size; the second sits lower so it stays inside the column instead of bleeding off the right edge */
+.spill-others{display:block!important;position:relative;padding:0!important;margin-top:28px;min-height:calc(var(--slv) * 1.78 + 90px)!important}
+.spill-others a{position:absolute!important;flex:none;width:var(--slv)!important;margin-left:0!important}
+.spill-others a:nth-child(1){left:0;top:0;transform:rotate(-7deg)!important}
+.spill-others a:nth-child(2){left:auto;right:0;top:calc(var(--slv) * .76 + 20px);transform:rotate(5deg)!important}
+.spill-others a:nth-child(1):hover,.spill-others a:nth-child(1):focus-visible{transform:rotate(-5deg) translateY(-8px)!important}
+.spill-others a:nth-child(2):hover,.spill-others a:nth-child(2):focus-visible{transform:rotate(3.5deg) translateY(-8px)!important}
+@media (max-width:900px){.spill-others a:nth-child(1){left:2vw}.spill-others a:nth-child(2){right:2vw}}
