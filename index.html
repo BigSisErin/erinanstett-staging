@@ -36,7 +36,7 @@ if(a)new IntersectionObserver(function(e,o){if(e[0].isIntersecting){a.classList.
 document.querySelectorAll('.acc .hd').forEach(function(b){b.addEventListener('click',function(){var r=b.parentNode,o=r.classList.toggle('open');b.setAttribute('aria-expanded',o)})})})();</script><script>
 /* VHS tracking seams */
 (function(){var els=document.querySelectorAll('[data-vhs]');if(!els.length)return;
-var rm=matchMedia('(prefers-reduced-motion:reduce)').matches,W=480,H=90;
+var rm=matchMedia('(prefers-reduced-motion:reduce)').matches,W=360,H=80;
 function rgb(h){h=h.replace('#','');return[parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16)]}
 function hash(n){n=Math.imul(n^n>>>15,2246822507);n=Math.imul(n^n>>>13,3266489909);return((n^n>>>16)>>>0)/4294967296}
 function smooth(t){return t*t*(3-2*t)}
@@ -44,19 +44,15 @@ els.forEach(function(el){
   var cv=document.createElement('canvas');cv.width=W;cv.height=H;el.appendChild(cv);
   var ctx=cv.getContext('2d'),col=rgb(el.dataset.color||'#000000'),img=ctx.createImageData(W,H),d=img.data,vis=!rm,last=0,t0=Math.random()*1000;
   function frame(ts){
-    var t=(ts||0)/1000+t0,fi=Math.floor(t*11),bar=((t*.075)%1.25)-.12; /* tracking bar travels top to bottom, loops */
+    var t=(ts||0)/1000+t0,fi=Math.floor(t*14);
     for(var y=0;y<H;y++){
-      var ty=y/(H-1),cover=smooth(Math.min(1,Math.max(0,(ty-.04)/.9))),
-          g=Math.exp(-Math.pow((ty-bar)/.075,2)),            /* tracking-bar influence */
-          wob=Math.sin(y*.45+t*5)*(1.5+g*34)+(hash(y*7+fi)-.5)*(2+g*14),
-          dens=Math.min(1,Math.pow(cover,2.2)*(0.2+g*.45)+g*.1+Math.pow(ty,3.2)*1.15),
-          row=y*W,seedY=y*131+Math.floor(fi/2)*17;
-      var x=0;
-      while(x<W){
-        var r=hash(seedY+x*3+1),run=2+Math.floor(hash(seedY+x*5+9)*(6+cover*34+Math.pow(ty,3)*60+g*50));
-        var on=r<dens+(ty>.995?1:0);
-        if(on){for(var k=0;k<run&&x+k<W;k++){var px=Math.floor(x+k+wob);px=((px%W)+W)%W;var i=(row+px)*4,a=255;if(ty>.99)a=255;d[i]=col[0];d[i+1]=col[1];d[i+2]=col[2];d[i+3]=Math.max(d[i+3],a)}}
-        x+=run;
+      var ty=y/(H-1),base=Math.pow(ty,2.1)*1.08,
+          jit=(hash(y*977+fi*13)-.5)*.16*(1-ty*.6),   /* per-line flicker, like a bad signal */
+          dens=Math.min(1,Math.max(0,base+jit)),row=y*W;
+      for(var x=0;x<W;x++){
+        if(ty>.985||hash(x*7919+y*104729+fi*15485863)<dens){var i=(row+x)*4;
+          var a=ty>.985?255:140+115*hash(x+y*31+fi*7);
+          d[i]=col[0];d[i+1]=col[1];d[i+2]=col[2];d[i+3]=a}
       }
     }
     ctx.putImageData(img,0,0);d.fill(0);
