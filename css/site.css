@@ -908,15 +908,15 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .homepage .sleeve-w{rotate:0deg}
 .homepage #choose{background:linear-gradient(#090706,rgba(9,7,6,0) 24%,rgba(9,7,6,0) 76%,#0b0807),linear-gradient(rgba(10,6,3,.5),rgba(10,6,3,.5)),#a4602f url(../img/ui/wood-teak.webp) center/cover no-repeat!important}
 .homepage .worked{background:#0b0807}
-.homepage .sleeve-w{filter:brightness(.5) saturate(.8) drop-shadow(0 2px 2px rgba(0,0,0,.7)) drop-shadow(0 22px 16px rgba(0,0,0,.55))!important;transition:filter .7s ease,rotate .4s ease}
+.homepage .sleeve-w{--tight:drop-shadow(0 1px 1px rgba(0,0,0,.75)) drop-shadow(0 3px 4px rgba(0,0,0,.5));filter:brightness(.28) saturate(.55) var(--tight)!important;transition:filter .6s ease,transform .4s cubic-bezier(.3,.7,.2,1)}
 .homepage .sleeve-w:nth-child(2){transition-delay:.1s}.homepage .sleeve-w:nth-child(3){transition-delay:.2s}
-.homepage #choose.lit .sleeve-w,.homepage .sleeve-w:hover,.homepage .sleeve-w:focus-within{filter:brightness(1) saturate(1) drop-shadow(0 2px 2px rgba(0,0,0,.7)) drop-shadow(0 22px 16px rgba(0,0,0,.55))!important}
-.homepage .sleeve-w:hover,.homepage .sleeve-w:focus-within{transition-delay:0s}
+.homepage #choose.lit .sleeve-w{filter:brightness(1) saturate(1) var(--tight)!important}
+.homepage .sleeve-w:hover,.homepage .sleeve-w:focus-within{filter:brightness(1) saturate(1) drop-shadow(0 2px 2px rgba(0,0,0,.7)) drop-shadow(0 20px 18px rgba(0,0,0,.55))!important;transition-delay:0s}
 @media (prefers-reduced-motion:reduce){.homepage .sleeve-w{transition:none}}
 .homepage .sleeve-w:nth-child(1){rotate:-1.6deg}.homepage .sleeve-w:nth-child(2){rotate:.9deg}.homepage .sleeve-w:nth-child(3){rotate:-.7deg}
 
 /* ===== About: collapsed list, index-style ===== */
-.homepage .block.about{background:#e9efe8!important;color:#2b2f33;padding:clamp(56px,8vw,120px) 0;position:relative;z-index:2}
+.homepage .block.about{background:linear-gradient(#0b0807 0,#1f3a38 clamp(50px,6vw,90px),#e9efe8 clamp(180px,19vw,270px))!important;color:#2b2f33;padding:clamp(170px,22vw,310px) 0 clamp(56px,8vw,120px);position:relative;z-index:2}
 .homepage .about .abouttrim{display:none}
 .ab{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:0 clamp(32px,6vw,88px);align-items:start;max-width:1040px;margin:0 auto}
 .abl{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding-right:clamp(20px,4vw,56px);border-right:1px solid #8a968d;min-height:100%}
