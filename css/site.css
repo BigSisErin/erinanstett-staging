@@ -916,7 +916,7 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .homepage .sleeve-w:nth-child(1){rotate:-1.6deg}.homepage .sleeve-w:nth-child(2){rotate:.9deg}.homepage .sleeve-w:nth-child(3){rotate:-.7deg}
 
 /* ===== About: collapsed list, index-style ===== */
-.homepage .block.about{background:#e9efe8!important;color:#2b2f33;padding:calc(260px + clamp(20px,4vw,60px)) 0 clamp(56px,8vw,120px);position:relative;z-index:2}
+.homepage .block.about{background:#e9efe8!important;color:#2b2f33;padding:calc(clamp(110px,14vw,200px) + clamp(20px,4vw,60px)) 0 clamp(56px,8vw,120px);position:relative;z-index:2}
 .homepage .about .abouttrim{display:none}
 .ab{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:0 clamp(32px,6vw,88px);align-items:start;max-width:1040px;margin:0 auto}
 .abl{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding-right:clamp(20px,4vw,56px);border-right:1px solid #8a968d;min-height:100%}
@@ -1000,9 +1000,7 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 /* pixel-dither seams between sections (replaces the soft gradients) */
 .homepage #choose{position:relative}
 .homepage #choose>.wrap{position:relative;z-index:1}
-.homepage #choose::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:340px;background:#0b0807;-webkit-mask:url(../img/ui/dither.png) left top/1536px 340px repeat-x;mask:url(../img/ui/dither.png) left top/1536px 340px repeat-x;pointer-events:none;z-index:0}
-.homepage #choose{padding-bottom:calc(240px + clamp(0px,2vw,24px))!important}
-.homepage .block.about::before{content:"";position:absolute;left:0;right:0;top:-1px;height:340px;background:#0b0807;transform:scaleY(-1);-webkit-mask:url(../img/ui/dither.png) left top/1536px 340px repeat-x;mask:url(../img/ui/dither.png) left top/1536px 340px repeat-x;pointer-events:none}
+.homepage #choose{padding-bottom:calc(150px + clamp(0px,2vw,24px))!important}
 .homepage .worked{margin-top:-2px}
 
 /* empty sleeve dims so wheels read; other sleeves stack below the list */
@@ -1018,4 +1016,22 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .spill-others a:nth-child(2):hover,.spill-others a:nth-child(2):focus-visible{transform:rotate(2deg) translateY(14px)}
 @media (max-width:900px){.spill-grid{grid-template-areas:"tabs" "stage" "list" "others"}.spill-others{justify-content:center;padding-top:20px}}
 @media (prefers-reduced-motion:reduce){.spill-others a{transition:none}}
-#choose.open{padding-bottom:calc(300px + clamp(0px,2vw,24px))!important}
+#choose.open{padding-bottom:calc(190px + clamp(0px,2vw,24px))!important}
+
+/* VHS tracking seams (canvas, see HOMEJS) */
+.vhs{position:absolute;left:0;right:0;height:clamp(120px,14vw,200px);pointer-events:none;z-index:0;overflow:hidden}
+.vhs canvas{display:block;width:100%;height:100%;filter:blur(.35px)}
+.vhs-a{bottom:-1px}
+.vhs-b{top:-1px;background:#0b0807}
+.homepage #choose.open{padding-bottom:calc(clamp(120px,14vw,200px) + 24px)!important}
+/* one sleeve size everywhere: idle, selected, empty, stacked */
+:root{--slv:clamp(220px,21vw,300px)}
+@media (max-width:700px){:root{--slv:min(62vw,250px)}}
+.homepage .sleeve-w{width:var(--slv)}
+.spillhead{width:var(--slv)!important}
+.spill .topsleeve{width:100%!important}
+.spill-grid{grid-template-columns:minmax(0,1fr) clamp(300px,31vw,440px)}
+.spill-others a{width:var(--slv)!important}
+.spill-others a:nth-child(2){margin-left:calc(var(--slv) * -.52)}
+.spill-others{justify-content:flex-end;padding-top:34px;min-height:calc(var(--slv) + 60px)}
+@media (max-width:900px){.spill-grid{grid-template-columns:1fr}.spill-others a:nth-child(2){margin-left:calc(var(--slv) * -.35)}}
