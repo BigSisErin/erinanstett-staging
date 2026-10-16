@@ -291,7 +291,8 @@ function Table(surface){
       var base=placed.length;
       lis.forEach(function(li,i){
         var best=null,bestScore=-1e9;
-        for(var k=0;k<(+surface.dataset.tries||36);k++){
+        var sp=!!surface.closest('.spill');  /* drawer: keep wheels apart so none is buried */
+        for(var k=0;k<(+surface.dataset.tries||(sp?200:36));k++){
           var cx=minX+rnd()*(maxX-minX),cy=minY+rnd()*(maxY-minY);
           var tdx=(rnd()-.5)*d*.3,tw=d*.5;
           var rect={l:cx+tdx-tw/2-8,r:cx+tdx+tw/2+8,t:cy+d/2-8,b:cy+d/2+tagH};
@@ -302,9 +303,15 @@ function Table(surface){
             if(Math.hypot(p.cx-(cx+tdx),p.cy-(cy+d/2+10))<d*.35)hit=true;
             if(Math.hypot(cx-(p.cx+p.tdx),cy-(p.cy+d/2+10))<d*.35)hit=true;
           });
-          if(tsr&&W>=700&&cx>tsr.l-d*.42&&cx<tsr.r+d*.42&&cy>tsr.t-d*.42&&cy<tsr.b+d*.42+tagH)hit=true;
+          if(tsr&&W>=700&&!sp&&cx>tsr.l-d*.42&&cx<tsr.r+d*.42&&cy>tsr.t-d*.42&&cy<tsr.b+d*.42+tagH)hit=true;
           if(placed.length&&s<d*.78)s-=400;
           if(hit)s-=1000;
+          if(sp){ /* drawer: wheels may rest on the sleeve but never on each other; spread them as far apart as the room allows */
+            var m=1e9;placed.forEach(function(p){m=Math.min(m,Math.hypot(p.cx-cx,p.cy-cy))});
+            s=Math.min(m,d*1.15);if(m<d*1.02)s-=1000+(d*1.02-m);
+            if(tsr&&W>=700){var ox=Math.max(0,Math.min(cx+d/2,tsr.r)-Math.max(cx-d/2,tsr.l)),oy=Math.max(0,Math.min(cy+d/2,tsr.b)-Math.max(cy-d/2,tsr.t));s-=ox*oy/(d*d)*90}
+            if(hit)s-=300;
+          }
           if(s>bestScore){bestScore=s;best={cx:cx,cy:cy,tdx:tdx,rect:rect,rot:(rnd()-.5)*34,trot:(rnd()-.5)*8}}
         }
         placed.push(best);
