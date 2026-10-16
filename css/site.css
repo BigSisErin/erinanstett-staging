@@ -734,7 +734,10 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 .table .surface::after{display:none}
 .sleeve-w{filter:drop-shadow(4px 5px 0 rgba(42,21,10,.28))!important}
 .settab{filter:drop-shadow(3px 3px 0 rgba(42,21,10,.28))!important}
-.reels li svg{filter:drop-shadow(4px 5px 0 rgba(42,21,10,.28))!important}
+.reels li svg{filter:drop-shadow(0 0 1px rgba(42,21,10,.7)) drop-shadow(4px 5px 0 rgba(42,21,10,.28))!important;transition:filter .3s ease}
+/* a reel that rises (hover, focus, hot) throws a deeper shadow onto whatever it now overlaps */
+.surface.live .reels li:hover svg,.surface.live .reels li:focus-within svg,.surface.live .reels li.hot svg{filter:drop-shadow(0 0 1px rgba(42,21,10,.8)) drop-shadow(8px 11px 0 rgba(42,21,10,.38)) drop-shadow(0 16px 20px rgba(42,21,10,.35))!important}
+@media (prefers-reduced-motion:reduce){.reels li svg{transition:none}}
 .sleeve-w .sleeve img,.sleeve-w .peek img{filter:none!important}
 .about{background:#f4ebd2!important}
 .gp{background:#f2e7c9!important;filter:drop-shadow(3px 4px 0 rgba(60,40,15,.28))!important}
