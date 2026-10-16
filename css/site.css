@@ -1072,3 +1072,6 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 /* IRL scale: sleeves may overlap at the edges */
 .homepage .sleeves{gap:0!important}
 .homepage .sleeves .sleeve-w{flex:none}
+
+.vhs{height:clamp(96px,11vw,170px)}
+.homepage .block.about{padding-top:calc(clamp(96px,11vw,170px) + clamp(20px,4vw,60px))!important}
