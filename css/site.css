@@ -868,3 +868,13 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 @media (max-width:700px){.worked .wrap{flex-direction:column;gap:14px}.worked ul{gap:14px 26px}.worked li{zoom:.82}}
 @media (prefers-reduced-motion:reduce){.worked img{transition:none}}
 @media (max-width:700px){.worked ul{display:grid;grid-template-columns:repeat(3,auto);justify-content:center;gap:18px 30px}.worked li{zoom:.8;justify-content:center}}
+/* tabletop: tags live in a list at the page bottom, wheels stay clean */
+.surface .tags,.surface.live .tags,.surface:not(.live) .reels li .lbl{display:none!important}
+.tlist{position:relative;z-index:2;background:#1b130d;color:#f4ecd6;padding:clamp(36px,5vw,64px) 0 clamp(44px,6vw,80px);box-shadow:0 -16px 26px -12px rgba(0,0,0,.5)}
+.tlist h2{margin:0 0 18px;font:600 .66rem/1 var(--ff-body);letter-spacing:.24em;text-transform:uppercase;color:rgba(244,236,214,.5)}
+.tlist ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:2px 40px}
+.tlist a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid rgba(244,236,214,.14);color:inherit;text-decoration:none}
+.tlist a b{font-family:var(--ff-display);font-weight:800;font-stretch:75%;text-transform:uppercase;letter-spacing:.05em;font-size:1rem}
+.tlist a span{font-size:.82rem;opacity:.6;text-align:right}
+.tlist a:hover b{color:#fff;text-decoration:underline;text-underline-offset:4px}
+@media (max-width:520px){.tlist a{flex-direction:column;gap:2px}.tlist a span{text-align:left}}

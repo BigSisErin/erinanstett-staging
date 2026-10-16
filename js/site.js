@@ -271,7 +271,7 @@ function Table(surface){
   function layout(){
     var W=surface.clientWidth,d=W<520?180:W<900?240:300,pad=Math.max(14,d*0.14),n=lis.length;
     surface.style.setProperty('--d',d+'px');
-    var tagH=46,rnd=mulberry(seed),placed=[],H,ds=$('.dropsleeve',surface),dsz=d*1.05,dp=null;var th=surface.parentNode.querySelector('.tophead'),top=th?th.offsetTop+th.offsetHeight+14:0;var tsl=surface.parentNode.querySelector('.topsleeve'),tsr=null;if(tsl){var sr=surface.getBoundingClientRect(),tr=tsl.getBoundingClientRect();tsr={l:tr.left-sr.left,r:tr.right-sr.left,t:tr.top-sr.top,b:tr.bottom-sr.top};if(W<700)top=Math.max(top,tsr.b+8);else top=Math.max(top,100);}
+    var tagH=14,rnd=mulberry(seed),placed=[],H,ds=$('.dropsleeve',surface),dsz=d*1.05,dp=null;var th=surface.parentNode.querySelector('.tophead'),top=th?th.offsetTop+th.offsetHeight+14:0;var tsl=surface.parentNode.querySelector('.topsleeve'),tsr=null;if(tsl){var sr=surface.getBoundingClientRect(),tr=tsl.getBoundingClientRect();tsr={l:tr.left-sr.left,r:tr.right-sr.left,t:tr.top-sr.top,b:tr.bottom-sr.top};if(W<700)top=Math.max(top,tsr.b+8);else top=Math.max(top,100);}
     if(tidy){
       var o1=(tsl&&W<700)?0:1,gap=Math.max(18,d*.16),cols=Math.max(1,Math.floor((W-pad*2+gap)/(d+gap))),rows=Math.ceil((n+o1)/cols);
       var rowH=d+tagH+gap,usedW=Math.min(n+1,cols)*(d+gap)-gap,x0=(W-usedW)/2;
@@ -287,7 +287,7 @@ function Table(surface){
         var best=null,bestScore=-1e9;
         for(var k=0;k<36;k++){
           var cx=minX+rnd()*(maxX-minX),cy=minY+rnd()*(maxY-minY);
-          var tdx=(rnd()-.5)*d*.3,tw=tagEls[i].offsetWidth||140;
+          var tdx=(rnd()-.5)*d*.3,tw=d*.5;
           var rect={l:cx+tdx-tw/2-8,r:cx+tdx+tw/2+8,t:cy+d/2-8,b:cy+d/2+tagH};
           var s=1e9,hit=false;
           placed.forEach(function(p){
