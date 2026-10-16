@@ -956,3 +956,40 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .ab .abl.rv{transform:translateX(-18px)}.ab.seen .abl.rv{transform:none}
 @media (prefers-reduced-motion:reduce){.ab .rv{opacity:1;transform:none;transition:none}.acc .pn,.acc .pn .in,.acc .row::after,.acc .pm{transition:none}}
 @media (max-width:760px){.ab{grid-template-columns:1fr}.abl{border-right:0;border-bottom:1px solid #8a968d;padding:0 0 28px;margin-bottom:28px;display:grid;grid-template-columns:auto 1fr;gap:0 18px;align-items:end}.abl .lock{grid-column:1/-1;width:min(260px,70%)}.abl .illo{width:min(150px,36vw);margin:0}.abl .loc{align-self:end;text-align:left;grid-column:2;grid-row:2}.abl .soc{grid-column:2;align-self:start;margin-top:12px}}
+
+/* ===== home bench: a sleeve opens, reels spill onto the tabletop ===== */
+.sleeves{transition:opacity .3s}
+.sleeves.out .sleeve-w{transition:transform .45s cubic-bezier(.5,0,.8,.4),opacity .36s ease,filter .3s!important;opacity:0;transform:translateY(90px) scale(.86)}
+.sleeves.out .sleeve-w.sel{transform:translateY(-14px) scale(.96);filter:brightness(1)!important}
+#choose.open .sleeves{display:none}
+#choose.open{padding-block:clamp(28px,4vw,56px)!important}
+.homepage #choose .wrap.choose{max-width:min(1360px,100%)}
+.spill[hidden]{display:none}
+.spill:focus{outline:none}
+.spill-grid{display:grid;grid-template-columns:minmax(0,1fr) clamp(270px,27vw,380px);grid-template-areas:"stage tabs" "stage list";grid-template-rows:auto 1fr;gap:0 clamp(18px,3vw,44px);align-items:start;animation:spillIn .5s ease both}
+@keyframes spillIn{from{opacity:0}to{opacity:1}}
+.spill-stage{grid-area:stage;position:relative;min-width:0}
+.spill .surface{position:relative;border:0!important;border-radius:0!important;box-shadow:none!important;background:none!important;overflow:visible;min-height:520px}
+.spill .surface.live .reels{position:absolute;inset:0}
+.spillhead{position:absolute;left:0;top:0;z-index:4;pointer-events:none}
+.spill .topsleeve{left:8px;top:14px;width:clamp(190px,19vw,270px)}
+@media (max-width:700px){.spill .topsleeve{position:relative;left:0;top:6px;width:min(46vw,200px);margin:0}}
+.spill .surface.spilling.live .reels li{transform:translate(var(--sx,0px),var(--sy,0px)) rotate(0deg) scale(.35)!important;opacity:0;transition:none!important}
+.spill .surface.live .reels li{opacity:1;transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .35s ease}
+.spill-tabs{grid-area:tabs;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:6px 4px 14px;border-bottom:1px solid rgba(244,236,214,.22)}
+.spill-tabs nav{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center}
+.spill-tabs a{font:700 .82rem/1 var(--ff-display);letter-spacing:.1em;text-transform:uppercase;color:rgba(244,236,214,.42);text-decoration:none;padding:7px 0;border-bottom:2px solid rgba(244,236,214,.2);transition:color .25s,border-color .25s}
+.spill-tabs a:hover,.spill-tabs a:focus-visible{color:#f4ecd6;border-color:#f4ecd6}
+.spill-tabs a[aria-current]{color:#15110d;background:#f4ecd6;border-radius:999px;padding:7px 15px;border-bottom:0}
+.spill-x{all:unset;cursor:pointer;font:700 .66rem/1 var(--ff-body);letter-spacing:.16em;text-transform:uppercase;color:rgba(244,236,214,.55);padding:6px 2px}
+.spill-x:hover,.spill-x:focus-visible{color:#f4ecd6}
+.spill-list{grid-area:list;list-style:none;margin:0;padding:0;background:linear-gradient(rgba(11,8,7,.8),rgba(11,8,7,.88));backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.spill-list a{display:flex;flex-direction:column;gap:3px;padding:15px 8px 14px;border-bottom:1px solid rgba(244,236,214,.16);color:#f4ecd6;text-decoration:none;transition:padding .3s,background .3s}
+.spill-list a b{font:800 1.02rem/1.1 var(--ff-display);font-stretch:75%;text-transform:uppercase;letter-spacing:.05em}
+.spill-list a span{font-size:.8rem;opacity:.6}
+.spill-list a:hover,.spill-list a:focus-visible{padding-left:18px;background:rgba(244,236,214,.07)}
+@media (max-width:900px){.spill-grid{grid-template-columns:1fr;grid-template-areas:"tabs" "stage" "list";gap:14px 0}.spill-tabs{padding-top:0}}
+@media (prefers-reduced-motion:reduce){.spill-grid{animation:none}.spill .surface.live .reels li,.sleeves.out .sleeve-w{transition:none!important}}
+.spillhead{width:clamp(200px,20vw,290px);left:8px;top:14px}
+.spill .topsleeve{left:0;top:0;width:100%;max-width:none}
+@media (max-width:700px){.spillhead{width:min(46vw,200px);left:4px;top:6px}.spill .topsleeve{position:relative;width:100%}}
