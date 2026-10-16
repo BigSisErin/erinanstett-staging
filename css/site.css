@@ -920,3 +920,6 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .sfsw span{font:600 .6rem/1 var(--ff-body);letter-spacing:.18em;text-transform:uppercase;color:rgba(244,236,214,.55);padding:0 6px}
 .sfsw button{font:700 .72rem/1 var(--ff-display);letter-spacing:.06em;text-transform:uppercase;color:#f4ecd6;background:none;border:1px solid rgba(244,236,214,.28);border-radius:999px;padding:7px 11px;cursor:pointer}
 .sfsw button[aria-pressed=true]{background:#f4ecd6;color:#15110d}
+/* CRT hint: subtle bottom-corner radius on the full-bleed hero */
+.homepage .tv-screen .hero-stage{border-radius:0 0 clamp(22px,3.2vw,46px) clamp(22px,3.2vw,46px)!important;overflow:hidden}
+@media (max-width:700px){.homepage .tv-screen .hero-stage{border-radius:0 0 26px 26px!important}}
