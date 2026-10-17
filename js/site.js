@@ -688,7 +688,7 @@ if(!RM){
   document.addEventListener('visibilitychange',upd);upd();
 }else idle.classList.add('still');
 
-/* ----- channel switch sound: dull click, then static that follows the on-screen static ----- */
+/* ----- channel switch sound: static that follows the on-screen static ----- */
 function noiseBuf(c,sec){var n=Math.floor(c.sampleRate*sec),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(var i=0;i<n;i++)d[i]=Math.random()*2-1;return b}
 var ST={buf:null,on:false};
 function loadStatic(){
@@ -703,16 +703,8 @@ function snd(ms){
   var E=window.__ea;if(!E||E.muted())return;var c=E.ctx();if(!c)return;
   function go(){
     var t=c.currentTime+0.005,dur=ms/1000;
-    /* dull click: low thump plus a muffled tick */
-    var o=c.createOscillator(),og=c.createGain();o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(48,t+0.06);
-    og.gain.setValueAtTime(0.0001,t);og.gain.linearRampToValueAtTime(0.55,t+0.004);og.gain.exponentialRampToValueAtTime(0.001,t+0.09);
-    o.connect(og);og.connect(c.destination);o.start(t);o.stop(t+0.1);
-    var tk=c.createBufferSource();tk.buffer=noiseBuf(c,0.05);
-    var lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=900;
-    var tg=c.createGain();tg.gain.setValueAtTime(0.35,t);tg.gain.exponentialRampToValueAtTime(0.001,t+0.04);
-    tk.connect(lp);lp.connect(tg);tg.connect(c.destination);tk.start(t);
     /* static: a random bit of the recorded TV static each time; envelope matches the screen (up by 18%, easing to 62%, gone at 100%) */
-    var s0=t+0.035,sd=Math.max(0.15,dur-0.035);
+    var s0=t,sd=Math.max(0.15,dur);
     var ns=c.createBufferSource(),rate=.93+Math.random()*.14,use=ST.buf,len=sd+0.1;
     if(use&&use.duration>len*rate+0.3){ns.buffer=use;ns.playbackRate.value=rate;ns.__off=0.05+Math.random()*(use.duration-len*rate-0.15)}
     else{ns.buffer=noiseBuf(c,Math.min(1.2,len));ns.__off=0}
