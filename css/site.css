@@ -942,8 +942,9 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .homepage .about .abouttrim{display:none}
 .ab{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:0 clamp(32px,6vw,88px);align-items:start;max-width:1040px;margin:0 auto}
 .abl{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding-right:clamp(20px,4vw,56px);border-right:1px solid #8a968d;min-height:100%}
-.abl .lock{width:min(100%,260px);height:auto;margin-bottom:-6px}
+.abl .lock{width:min(100%,260px);height:auto;margin-bottom:14px}
 .abl .illo{width:min(100%,210px);height:auto;margin:0 0 clamp(28px,5vw,56px) 14px}
+.abr .loc-m{display:none}
 .abl .loc{margin:0;font:700 .66rem/1.5 var(--ff-body);letter-spacing:.14em;text-transform:uppercase;text-align:right;align-self:flex-end}
 .abl .loc em{font-style:italic}
 .abl .soc{margin:22px 0 0;align-self:flex-end;font:700 .62rem/1 var(--ff-body);letter-spacing:.16em;text-transform:uppercase}
@@ -978,7 +979,7 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .ab.seen .rv{opacity:1;transform:none}
 .ab .abl.rv{transform:translateX(-18px)}.ab.seen .abl.rv{transform:none}
 @media (prefers-reduced-motion:reduce){.ab .rv{opacity:1;transform:none;transition:none}.acc .pn,.acc .pn .in,.acc .row::after,.acc .pm{transition:none}}
-@media (max-width:760px){.ab{grid-template-columns:1fr}.abl{border-right:0;border-bottom:1px solid #8a968d;padding:0 0 28px;margin-bottom:28px;display:grid;grid-template-columns:auto 1fr;gap:0 18px;align-items:end}.abl .lock{grid-column:1/-1;width:min(260px,70%)}.abl .illo{width:min(150px,36vw);margin:0}.abl .loc{align-self:end;text-align:left;grid-column:2;grid-row:2}.abl .soc{grid-column:2;align-self:start;margin-top:12px}}
+@media (max-width:760px){.ab{grid-template-columns:1fr}.abl{border-right:0;border-bottom:1px solid #8a968d;padding:0 0 28px;margin-bottom:28px;display:grid;grid-template-columns:auto 1fr;gap:0 18px;align-items:end}.abl .lock{grid-column:1/-1;grid-row:1;width:min(260px,70%);margin-bottom:14px}.abl .illo{grid-column:1;grid-row:2;width:min(150px,36vw);margin:0}.abl .loc-d{display:none}.abl .soc{grid-column:2;grid-row:2;align-self:end;margin:0}.abr .loc-m{display:block;margin:22px 0 0;text-align:left}}
 
 /* ===== home bench: a sleeve opens, reels spill onto the tabletop ===== */
 .sleeves{transition:opacity .3s}
@@ -1163,9 +1164,9 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .foot .legalnav a{text-decoration:underline;text-underline-offset:3px}
 .nf .nfw{filter:brightness(.14) drop-shadow(0 0 0 #000)}
 
-.abl .illo{margin:0 0 0 14px}
-.abl .lock{margin:14px 0 clamp(28px,5vw,56px)}
-@media (max-width:760px){.abl .illo{grid-column:1;grid-row:1;margin:0}.abl .loc{grid-column:2;grid-row:1;align-self:end}.abl .lock{grid-column:1/-1;grid-row:2;margin:14px 0 0}.abl .soc{grid-column:1/-1;grid-row:3;margin-top:12px;align-self:start}}
+.abl .illo{margin:0 0 clamp(28px,5vw,56px) 14px}
+.abl .lock{margin:0 0 10px}
+@media (max-width:760px){.abl .lock{grid-column:1/-1;grid-row:1;margin:0 0 -30px}.abl .illo{grid-column:1;grid-row:2;margin:0}.abl .soc{grid-column:2;grid-row:2;margin:0;align-self:end}.abl .loc-d{display:none}.abr .loc-m{display:block;margin:22px 0 0;font:700 .66rem/1.5 var(--ff-body);letter-spacing:.14em;text-transform:uppercase;text-align:left}.abr .loc-m em{font-style:italic}}
 .acc{border-top:0}
 
 /* ===== landing page, phones: hero images and videos stay behind the frame copy ===== */
