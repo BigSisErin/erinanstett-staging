@@ -1167,3 +1167,11 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 .abl .lock{margin:14px 0 clamp(28px,5vw,56px)}
 @media (max-width:760px){.abl .illo{grid-column:1;grid-row:1;margin:0}.abl .loc{grid-column:2;grid-row:1;align-self:end}.abl .lock{grid-column:1/-1;grid-row:2;margin:14px 0 0}.abl .soc{grid-column:1/-1;grid-row:3;margin-top:12px;align-self:start}}
 .acc{border-top:0}
+
+/* ===== landing page, phones: hero images and videos stay behind the frame copy ===== */
+@media (max-width:700px){
+  .homepage .frame.intro:not(.mobonly) img.bg,.homepage .frame.intro:not(.mobonly) video.bg{display:block!important}
+  .homepage .frame.intro:not(.mobonly) .amb{display:none}
+  .homepage .frame.intro:not(.mobonly)::after{background:linear-gradient(to top,rgba(14,12,13,.9) 0%,rgba(14,12,13,.62) 34%,rgba(14,12,13,.18) 62%,rgba(14,12,13,.35) 100%)}
+  .homepage .frame.intro:not(.mobonly) .copy{top:auto;bottom:86px;justify-content:flex-end}
+}
