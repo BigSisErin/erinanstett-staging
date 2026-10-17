@@ -45,10 +45,10 @@ function playClick(dl){
   if(!CLK.a||!CLK.b)return false;
   var k=pickClick(),src=ctx.createBufferSource(),g=ctx.createGain();
   src.buffer=CLK[k];src.playbackRate.value=.93+Math.random()*.15;
-  g.gain.value=(k==='a'?.855:.72)*(.72+Math.random()*.28);
+  g.gain.value=(k==='a'?.673:.566)*(.72+Math.random()*.28);
   src.connect(g);g.connect(ctx.destination);src.start(ctx.currentTime+(dl||0));return true;
 }
-function play(dl){if(playClick(dl))return;var t=ctx.currentTime+(dl||0);clack(t,2300,0.45);clack(t+0.075,1500,0.34)}
+function play(dl){if(playClick(dl))return;var t=ctx.currentTime+(dl||0);clack(t,2300,0.354);clack(t+0.075,1500,0.269)}
 (function(){try{var AC=window.AudioContext||window.webkitAudioContext;if(AC&&!ctx){ctx=new AC();loadClicks()}}catch(e){}})();  /* start decoding the samples at page load; resume() still waits for a gesture */
 function click(dl){   /* dl: seconds to wait, so the click lands with the movement rather than the tap */
   if(muted||!ctx)return;
