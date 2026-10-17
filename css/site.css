@@ -709,6 +709,8 @@ button.gp.front:focus-visible{outline:3px solid #e8573a;outline-offset:4px}
 .cmp:focus-within .cbar i{outline:3px solid #61c4c1;outline-offset:2px}
 @media (prefers-reduced-motion:no-preference){.frame.cur .cmp:not(.touched){animation:cmpnudge 1.6s ease-in-out 1s 1 both}}
 @keyframes cmpnudge{0%,100%{--p:50%}30%{--p:30%}70%{--p:70%}}
+
+@media (max-width:899px){.links+.tools{margin-left:auto}}
 /* FLAT PASS (preview only): printed, not rendered. Flat color, hard offset shadows, grain kept only where it is paper. */
 .tvsec{background:#2b170c!important;box-shadow:none!important}
 .tvsec::before{display:none!important}
