@@ -1186,3 +1186,28 @@ html.vfs-on .rnav *,html.vfs-on .rnav{visibility:hidden!important}
 
 /* desktop About: illustration, lockup and the lines below share one right edge */
 @media (min-width:761px){.abl .illo,.abl .lock{align-self:flex-end}.abl .illo{margin-left:0;margin-right:-2px}.abl .lock{margin-right:-7px}}
+
+/* ===== light hero (S.K.I.N. Method): the client's website hero, white ground, copy above, lockup below ===== */
+.frame.intro.light{background:#fff;color:#3b2320;cursor:default;display:flex;flex-direction:column;padding:clamp(84px,11vh,112px) var(--pad,clamp(18px,4vw,56px)) 84px}
+.frame.intro.light::after{display:none}
+.frame.intro.light .copy{position:static;z-index:2;flex:none;max-width:54rem;width:100%;margin:0 auto 0 0;padding-left:0}
+@media (min-width:701px){.frame.intro.light{padding-left:max(var(--pad,clamp(18px,4vw,56px)),92px);padding-right:max(var(--pad,clamp(18px,4vw,56px)),92px)}.frame.intro.light .copy{left:auto}}
+.frame.intro.light .copy h1{color:#3b2320;font-size:clamp(1.9rem,4.2vw,3.4rem);margin-bottom:.35rem}
+.frame.intro.light .copy .credit{color:#a55d2a;margin-bottom:.8rem}
+.frame.intro.light .copy p:not(.kicker){color:rgba(59,35,32,.78);font-size:clamp(.88rem,1.15vw,1rem);line-height:1.55;max-width:62ch}
+.frame.intro.light .lockup{flex:1 1 0;min-height:0;margin:clamp(10px,2.4vh,26px) 0 0;position:relative}
+.frame.intro.light .lockup picture{display:contents}
+.frame.intro.light .lockup img{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;filter:none}
+.frame.intro.light .copy,.frame.intro.light .copy *{text-shadow:none!important}
+@media (max-width:700px){.frame.intro.light .copy p:not(.kicker){font-size:.84rem;line-height:1.45}}
+/* chrome on a white frame: nav, arrows, dots and reel links switch to the dark brand ink while it is showing */
+body.reel-page:has(.frame.light.cur) .bar{background:none;color:#3b2320}
+body.reel-page:has(.frame.light.cur) .links a,body.reel-page:has(.frame.light.cur) .crumb{color:#3b2320}
+body.reel-page:has(.frame.light.cur) .btn-round{color:#3b2320}
+body.reel-page:has(.frame.light.cur) .btn-round:hover{background:#3b2320;color:#fff}
+body.reel-page:has(.frame.light.cur) .dots button{border-color:rgba(59,35,32,.7)}
+body.reel-page:has(.frame.light.cur) .dots button[aria-current=true]{border-color:var(--flame);box-shadow:0 0 0 2px #fff}
+body.reel-page:has(.frame.light.cur) .dots .pos,body.reel-page:has(.frame.light.cur) .rl{color:#3b2320}
+body.reel-page:has(.frame.light.cur) .rl:hover{border-color:#3b2320}
+body.reel-page:has(.frame.light.cur) .hint{color:#a55d2a}
+body.reel-page:has(.frame.light.cur) .hint{display:none}
