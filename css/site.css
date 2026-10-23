@@ -1214,3 +1214,8 @@ body.reel-page:has(.frame.light.cur) .hint{display:none}
 /* light hero: image on top, type below */
 .frame.intro.light .lockup{order:1;margin:0 0 clamp(10px,2.4vh,26px)}
 .frame.intro.light .copy{order:2}
+/* light hero: lockup bleeds off left and right */
+.frame.intro.light{padding-left:0!important;padding-right:0!important}
+.frame.intro.light .copy{padding-left:max(var(--pad,clamp(18px,4vw,56px)),20px);padding-right:max(var(--pad,clamp(18px,4vw,56px)),20px)}
+@media (min-width:701px){.frame.intro.light{padding-top:72px}.frame.intro.light .copy{padding-left:92px;padding-right:92px;max-width:none;display:grid;grid-template-columns:minmax(0,26rem) minmax(0,1fr);column-gap:3rem;align-items:start}.frame.intro.light .copy h1{margin-bottom:.2rem}.frame.intro.light .copy>*:not(h1):not(.credit):not(.kicker){grid-column:2;grid-row:1/span 3}.frame.intro.light .copy h1,.frame.intro.light .copy .credit,.frame.intro.light .copy .kicker{grid-column:1}.frame.intro.light .lockup{margin:0 0 clamp(14px,2.4vh,26px)}.frame.intro.light .lockup img{object-fit:cover;object-position:center}}
+@media (max-width:700px){.frame.intro.light .lockup{display:flex;align-items:center}.frame.intro.light .lockup img{position:static;width:100%;height:auto;object-fit:contain}}
