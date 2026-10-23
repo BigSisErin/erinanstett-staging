@@ -1211,3 +1211,6 @@ body.reel-page:has(.frame.light.cur) .dots .pos,body.reel-page:has(.frame.light.
 body.reel-page:has(.frame.light.cur) .rl:hover{border-color:#3b2320}
 body.reel-page:has(.frame.light.cur) .hint{color:#a55d2a}
 body.reel-page:has(.frame.light.cur) .hint{display:none}
+/* light hero: image on top, type below */
+.frame.intro.light .lockup{order:1;margin:0 0 clamp(10px,2.4vh,26px)}
+.frame.intro.light .copy{order:2}
