@@ -162,7 +162,13 @@ function Reel(stage){
 }
 
 /* ---------- Vimeo frames: mounted only while active ---------- */
-var VS={on:false};  /* video sound opted in on this page (one project = one page) */
+/* video sound opt-in: once a visitor turns sound on for any video, it stays on across every project for the rest of the visit.
+   Each project is its own page, so the choice lives in sessionStorage (clears when the tab closes; never persists to a later visit). */
+var VS=(function(){
+  var K='ea-vsound',on=false;
+  try{on=sessionStorage.getItem(K)==='on'}catch(e){}
+  return{get on(){return on},set on(v){on=!!v;try{on?sessionStorage.setItem(K,'on'):sessionStorage.removeItem(K)}catch(e){}}};
+})();
 function mountYT(f,box){
   var id=f.dataset.yt,snd=$('.vsound',box);
   var fr=document.createElement('iframe');
